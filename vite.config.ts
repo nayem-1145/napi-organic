@@ -3,6 +3,9 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
+  // Relative base so the build works on GitHub Pages at both
+  // https://<user>.github.io/ and https://<user>.github.io/<repo>/
+  base: './',
   plugins: [react(), tailwindcss()],
   build: {
     target: 'es2020',

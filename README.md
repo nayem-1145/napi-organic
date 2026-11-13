@@ -8,6 +8,13 @@ npm run dev        # http://localhost:5173
 npm run build      # type-check + production build in dist/
 ```
 
+## Deploy to GitHub Pages
+1. Push this folder (the one with `package.json`) as the repo root, on the `main` branch.
+2. On GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+3. Every push to `main` runs `.github/workflows/deploy.yml`, which builds and publishes `dist/`.
+
+`vite.config.ts` uses `base: './'`, so the site works at `https://<user>.github.io/` or `https://<user>.github.io/<repo>/` with no changes.
+
 ## Before launch — fill in `src/config/site.ts`
 | Field | Status |
 |---|---|
