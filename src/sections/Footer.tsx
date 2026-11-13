@@ -1,29 +1,28 @@
-import { LogoTab } from '../components/Brand';
+import { LogoTab, OrderButton } from '../components/Brand';
 import { FacebookIcon, Globe, InstagramIcon, WhatsAppIcon } from '../components/Icons';
 import { NAV_LINKS } from '../components/Nav';
 import { site } from '../config/site';
 import { scrollToId, toBnDigits } from '../lib/utils';
-import { whatsappOrderUrl } from '../lib/whatsapp';
+import { whatsappUrl } from '../lib/whatsapp';
 
 export function Footer() {
   const c = site.contact;
   const year = new Date().getFullYear();
   return (
-    <footer className="relative bg-forest-deep text-cream">
+    // bottom padding on mobile leaves room for the sticky order bar
+    <footer id="site-footer" className="relative bg-forest-deep pb-24 text-cream lg:pb-0">
       <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
         <LogoTab />
         <div className="grid gap-12 pt-12 pb-16 lg:grid-cols-12 lg:pt-16">
           <div className="lg:col-span-5">
             <p className="display max-w-md text-2xl text-cream lg:text-3xl">{site.brand.tagline}</p>
             <p className="mt-4 max-w-md text-cream/65">{site.brand.description}</p>
-            <a
-              href={whatsappOrderUrl(1)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-light mt-8"
-            >
-              <WhatsAppIcon /> WhatsApp-এ অর্ডার
-            </a>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <OrderButton label="অর্ডার করুন" />
+              <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp">
+                <WhatsAppIcon /> WhatsApp
+              </a>
+            </div>
           </div>
 
           <nav className="lg:col-span-3 lg:col-start-7" aria-label="ফুটার মেনু">

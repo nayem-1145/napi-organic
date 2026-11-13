@@ -5,28 +5,28 @@ import { asset, toBnDigits } from '../lib/utils';
 const STEPS = [
   {
     title: 'সবুজ বাগান থেকে',
-    text: 'গল্পের শুরু কলাবাগানে — যেখানে রোদ, মাটি আর সময় মিলে তৈরি হয় স্বাদ।',
+    text: 'গল্পের শুরু কলাবাগানে — যেখানে রোদ, মাটি আর সময় মিলে বেড়ে ওঠে অর্গানিক কলা।',
     img: () => site.images.plantation,
     brief: 'কলাবাগান, ভোরের নরম আলো, সারি সারি গাছ (প্রশস্ত ফ্রেম)',
     tone: 'green' as const,
   },
   {
-    title: 'বাছাই করা কলা',
-    text: 'প্রতিটি কলা দেখে-শুনে বাছাই করা হয়, যাতে প্রতিটি চিপসে থাকে একই মান।',
+    title: 'বাছাই করা অর্গানিক কলা',
+    text: 'মূল উপাদান অর্গানিক কলা — দেখে-শুনে বাছাই করা, যাতে প্রতিটি প্যাকেটে থাকে একই মান।',
     img: () => asset('images/bananas.webp'),
     brief: '',
     tone: 'warm' as const,
   },
   {
     title: 'ধীরে, যত্নে তৈরি',
-    text: 'পাতলা করে কাটা, মসলায় ভেজানো আর ভ্যাকুয়ামে শুকানো — তাড়াহুড়ো ছাড়া।',
+    text: 'পাতলা করে কাটা, মসলায় ভেজানো আর ভ্যাকুয়ামে শুকানো — কোনো প্রিজারভেটিভ ছাড়াই।',
     img: () => site.images.preparation,
     brief: 'কলা পাতলা করে কাটা ও শুকানোর প্রক্রিয়া, ক্লোজ-আপ, প্রাকৃতিক আলো',
     tone: 'cream' as const,
   },
   {
     title: 'আপনার হাতে',
-    text: 'জিপ-লক প্যাকেটে বন্দি মুচমুচে স্বাদ — যখন খুশি খুলুন, আবার আটকে রাখুন।',
+    text: 'রিসাইকেলযোগ্য জিপ-লক প্যাকে স্বাস্থ্যকর নাস্তা — যখন খুশি খুলুন, আবার আটকে রাখুন।',
     img: () => asset('images/product-photo.webp'),
     brief: '',
     tone: 'cream' as const,
@@ -37,7 +37,7 @@ export function BrandStory() {
   return (
     <section id="story" className="relative py-24 lg:py-40">
       <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
-        <SectionHeading eyebrow="আমাদের গল্প" title="প্রকৃতির কাছাকাছি, স্বাদের আরও কাছে" className="max-w-4xl" />
+        <SectionHeading eyebrow="আমাদের গল্প" title="অর্গানিক বাগান থেকে আপনার নাস্তার টেবিলে" className="max-w-4xl" />
 
         <div className="mt-16 space-y-20 lg:mt-28 lg:space-y-36">
           {STEPS.map((s, i) => {

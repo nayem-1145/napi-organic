@@ -21,20 +21,26 @@ export function Faq() {
             const isOpen = open === i;
             const id = `${uid}-${i}`;
             return (
-              <div key={f.q} className="border-b border-ink/12 first:border-t" data-reveal>
+              <div
+                key={f.q}
+                className={`mb-3 rounded-[1.4rem] bg-white transition-shadow duration-500 ${
+                  isOpen ? 'shadow-[0_0_0_1px_rgb(244_162_97/0.4),0_24px_40px_-28px_rgb(27_77_62/0.45)]' : 'shadow-[0_0_0_1px_rgb(27_77_62/0.08)] hover:shadow-[0_0_0_1px_rgb(244_162_97/0.35)]'
+                }`}
+                data-reveal
+              >
                 <h3>
                   <button
                     id={`${id}-q`}
                     aria-expanded={isOpen}
                     aria-controls={`${id}-a`}
                     onClick={() => setOpen(isOpen ? null : i)}
-                    className="group flex w-full items-start gap-5 py-7 text-left"
+                    className="group flex w-full items-start gap-4 px-5 py-5 text-left sm:px-7 sm:py-6"
                   >
-                    <span className="pt-1 text-sm text-sage tabular-nums">{toBnDigits(`0${i + 1}`)}</span>
-                    <span className="flex-1 text-lg font-semibold text-forest transition-colors group-hover:text-sage lg:text-xl">{f.q}</span>
+                    <span className="pt-1 text-sm font-semibold text-amber-deep tabular-nums">{toBnDigits(`0${i + 1}`)}</span>
+                    <span className="flex-1 text-[1.05rem] font-semibold text-forest transition-colors group-hover:text-sage lg:text-lg">{f.q}</span>
                     <span
-                      className={`mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full border transition-all duration-500 ease-(--ease-premium) ${
-                        isOpen ? 'rotate-45 border-forest bg-forest text-cream' : 'border-ink/15 text-forest'
+                      className={`mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full transition-all duration-500 ease-(--ease-premium) ${
+                        isOpen ? 'rotate-45 bg-gradient-to-br from-banana to-amber text-forest-deep' : 'bg-banana-soft text-forest'
                       }`}
                     >
                       <Plus size={18} />
@@ -43,7 +49,7 @@ export function Faq() {
                 </h3>
                 <div id={`${id}-a`} role="region" aria-labelledby={`${id}-q`} className="accordion-panel" data-open={isOpen}>
                   <div>
-                    <p className="max-w-2xl pr-14 pb-8 pl-10 text-ink-soft">{f.a}</p>
+                    <p className="max-w-2xl pr-6 pb-6 pl-12 text-ink-soft sm:pr-16 sm:pl-14">{f.a}</p>
                   </div>
                 </div>
               </div>

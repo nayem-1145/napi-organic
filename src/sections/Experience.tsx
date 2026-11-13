@@ -8,6 +8,7 @@ import { OrderButton } from '../components/Brand';
 import { site } from '../config/site';
 import { loadMotion } from '../lib/motion';
 import { setStore, useStore } from '../lib/store';
+import { Check } from '../components/Icons';
 import { asset, clamp, prefersReducedMotion, scrollToId, toBnDigits } from '../lib/utils';
 import type { NapiExperience } from '../three/Engine';
 
@@ -26,30 +27,30 @@ const CHAPTERS: Chapter[] = [
   {
     from: 0.025,
     to: 0.25,
-    label: 'পরিচয়',
-    title: 'এক প্যাকেটে প্রকৃতির গল্প',
-    body: 'সামনে, পাশে, পেছনে — চারপাশ ঘুরে দেখুন Napi Organic-এর প্যাকেট।',
+    label: 'স্বচ্ছতা',
+    title: 'লুকানো কিছু নেই',
+    body: 'সামনে, পাশে, পেছনে — ঘুরে দেখুন। প্যাকেটের পেছনেই ছাপা আছে প্রতিটি উপাদান।',
   },
   {
     from: 0.285,
     to: 0.5,
-    label: 'খোলার মুহূর্ত',
-    title: 'একটা টান, তারপর মুচমুচে',
-    body: 'ছেঁড়ার খাঁজ থেকে আলতো টানে খুলে যায় প্যাকেট — ভেতরে অপেক্ষা করছে সোনালি চিপস।',
+    label: 'প্রিজারভেটিভমুক্ত',
+    title: 'খুলুন নিশ্চিন্তে',
+    body: 'কোনো প্রিজারভেটিভ নেই — ভেতরে শুধু অর্গানিক কলা আর পরিচিত মসলা।',
   },
   {
     from: 0.6,
     to: 0.74,
-    label: 'সোনালি বৃষ্টি',
-    title: 'প্রতিটি চিপস আলাদা',
-    body: 'পাতলা করে কাটা, মসলায় ভেজানো, ভ্যাকুয়ামে শুকানো — তাই প্রতিটি টুকরো হালকা আর মুচমুচে।',
+    label: 'যত্নের প্রক্রিয়া',
+    title: 'অর্গানিক কলা, ভ্যাকুয়ামে শুকানো',
+    body: 'পাতলা করে কাটা অর্গানিক কলা মসলায় ভিজিয়ে ভ্যাকুয়াম পদ্ধতিতে শুকানো হয়।',
   },
   {
     from: 0.75,
     to: 0.885,
-    label: 'বাটি ভরে',
-    title: 'ভাগ করে নেওয়ার স্বাদ',
-    body: 'আড্ডায়, চায়ের কাপের পাশে কিংবা একান্ত অবসরে।',
+    label: 'টিফিনের সময়',
+    title: 'বাচ্চার টিফিনে, পরিবারের নাস্তায়',
+    body: 'স্কুলের টিফিন বক্সে, বিকেলের নাস্তায় কিংবা ভ্রমণে — নিশ্চিন্তে দিন।',
   },
 ];
 const FINAL_FROM = 0.915;
@@ -214,14 +215,22 @@ export function Experience() {
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              'radial-gradient(60% 55% at 70% 55%, rgb(231 185 77 / 0.22), transparent 70%), radial-gradient(40% 40% at 15% 90%, rgb(111 141 85 / 0.12), transparent 70%), #f8f5ea',
+              'radial-gradient(55% 60% at 72% 52%, rgb(255 209 102 / 0.55), transparent 68%), radial-gradient(35% 40% at 92% 92%, rgb(244 162 97 / 0.38), transparent 70%), radial-gradient(38% 42% at 8% 96%, rgb(127 176 105 / 0.26), transparent 70%), linear-gradient(180deg, #fffaf0 0%, #faf7f2 100%)',
           }}
         />
+        {/* slow-moving colour blobs for a living, tropical backdrop */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className={`absolute top-[12%] right-[6%] h-[46vmin] w-[46vmin] rounded-full bg-banana/45 blur-3xl ${reduced ? '' : 'animate-blob'}`} />
+          <div
+            className={`absolute right-[24%] bottom-[8%] h-[30vmin] w-[30vmin] rounded-full bg-amber/30 blur-3xl ${reduced ? '' : 'animate-blob'}`}
+            style={{ animationDelay: '-6s' }}
+          />
+        </div>
         <div
           aria-hidden
-          className="display pointer-events-none absolute -bottom-[0.18em] left-1/2 -translate-x-1/2 text-[28vw] leading-none whitespace-nowrap text-forest/[0.035] select-none lg:text-[19vw]"
+          className="display pointer-events-none absolute -bottom-[0.18em] left-1/2 -translate-x-1/2 text-[28vw] leading-none whitespace-nowrap text-forest/[0.045] select-none lg:text-[19vw]"
         >
-          মুচমুচে
+          অর্গানিক
         </div>
 
         {/* WebGL stage */}
@@ -251,32 +260,39 @@ export function Experience() {
         <div ref={heroRef} className="relative z-10 mx-auto flex h-full max-w-[1440px] px-5 sm:px-8 lg:items-center lg:px-12">
           <div className="max-w-[40rem] pt-24 lg:pt-0">
             <p className="eyebrow mb-5 lg:mb-7">{site.brand.tagline}</p>
-            <h1 className="display text-[2.05rem] text-forest sm:text-5xl lg:text-[4.1rem] xl:text-[4.6rem]">
-              প্রকৃতির খাঁটি স্বাদে
+            <h1 className="display text-[2.15rem] text-forest sm:text-5xl lg:text-[4.2rem] xl:text-[4.7rem]">
+              বাচ্চার টিফিনে
               <br />
-              <span className="relative inline-block">
-                মুচমুচে
-                <svg className="absolute -bottom-1 left-0 w-full text-banana" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden>
-                  <path d="M2 8 C 50 2, 120 2, 198 7" stroke="currentColor" strokeWidth="5" fill="none" strokeLinecap="round" />
-                </svg>
+              <span className="relative inline-block text-forest-deep">
+                <span className="relative z-10">অর্গানিক</span>
+                <span aria-hidden className="absolute inset-x-[-0.12em] bottom-[0.08em] -z-0 h-[0.36em] -rotate-1 rounded-full bg-gradient-to-r from-banana to-amber" />
               </span>{' '}
-              প্রতিটি মুহূর্ত
+              নাস্তা
             </h1>
             <p className="mt-5 max-w-[30rem] text-[0.98rem] text-ink-soft sm:text-lg lg:mt-7">
-              বাছাই করা কলা থেকে তৈরি সুস্বাদু ও মুচমুচে ব্যানানা চিপস। প্রতিটি কামড়ে উপভোগ করুন প্রকৃতির সহজ স্বাদ।
+              অর্গানিক কলা থেকে তৈরি, প্রিজারভেটিভমুক্ত ব্যানানা চিপস। স্কুলের টিফিন বা বিকেলের নাস্তায় — বাবা-মায়ের নিশ্চিন্ত পছন্দ।
             </p>
+            {/* claims printed on the package */}
+            <ul className="mt-5 hidden flex-wrap gap-2 sm:flex lg:mt-6" aria-label="প্যাকেটে উল্লেখিত বৈশিষ্ট্য">
+              {['অর্গানিক কলা', 'প্রিজারভেটিভ নেই', 'ভিগান ও গ্লুটেন-ফ্রি', 'টিফিন-বান্ধব জিপ-লক'].map((c) => (
+                <li key={c} className="glass inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[0.8rem] font-semibold text-forest">
+                  <Check size={14} strokeWidth={3} className="text-amber-deep" aria-hidden />
+                  {c}
+                </li>
+              ))}
+            </ul>
             <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 lg:mt-9">
-              <OrderButton />
-              <button onClick={() => scrollToId('brand')} className="btn btn-ghost">
-                আমাদের গল্প জানুন
+              <OrderButton className="max-sm:w-full" />
+              <button onClick={() => scrollToId('kids')} className="btn btn-ghost max-sm:hidden">
+                বাচ্চাদের জন্য কেন?
                 <span className="line" />
               </button>
             </div>
             <dl className="mt-12 hidden gap-10 text-sm lg:flex">
               {[
-                ['নেট ওজন', `${toBnDigits(site.product.weightGrams)} গ্রাম`],
-                ['ফ্লেভার', site.product.flavour],
+                ['মূল উপাদান', 'অর্গানিক কলা'],
                 ['পদ্ধতি', 'ভ্যাকুয়াম ড্রায়েড'],
+                ['নেট ওজন', `${toBnDigits(site.product.weightGrams)} গ্রাম`],
               ].map(([k, v]) => (
                 <div key={k}>
                   <dt className="text-ink-soft">{k}</dt>
@@ -323,8 +339,8 @@ export function Experience() {
               ref={finalRef}
               className="invisible absolute inset-x-0 top-0 z-20 px-5 pt-24 opacity-0 sm:px-8 lg:top-1/2 lg:right-auto stage-col lg:max-w-[30rem] lg:-translate-y-1/2 lg:px-0 lg:pt-0"
             >
-              <p className="eyebrow mb-4">{toBnDigits('05')} — উপভোগের সময়</p>
-              <h2 className="display text-[2.1rem] text-forest lg:text-[3.6rem]">খুলুন, উপভোগ করুন, ভালো থাকুন।</h2>
+              <p className="eyebrow mb-4">{toBnDigits('05')} — ভালো থাকার শুরু</p>
+              <h2 className="display text-[2.1rem] text-forest lg:text-[3.6rem]">বাচ্চার টিফিনে প্রকৃতির উপাদান।</h2>
               <div className="mt-6 lg:mt-8">
                 <OrderButton />
               </div>
@@ -355,7 +371,7 @@ function StaticStory() {
           loading="lazy"
         />
         <div>
-          <h2 className="display text-[2.1rem] text-forest lg:text-[3.4rem]">খুলুন, উপভোগ করুন, ভালো থাকুন।</h2>
+          <h2 className="display text-[2.1rem] text-forest lg:text-[3.4rem]">প্রকৃতির উপাদানে, ভালো থাকার অভ্যাস।</h2>
           <div className="mt-8">
             <OrderButton />
           </div>

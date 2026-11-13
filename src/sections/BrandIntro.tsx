@@ -12,14 +12,14 @@ export function BrandIntro() {
               Napi Organic
             </p>
             <h2 className="display text-[2.4rem] text-forest sm:text-6xl lg:text-[5.2rem]" data-reveal>
-              স্বাদের গল্প,
+              ভালো থাকার অভ্যাস,
               <br />
-              <span className="text-sage">প্রকৃতির ছোঁয়ায়</span>
+              <span className="text-sage">প্রকৃতির উপাদানে</span>
             </h2>
           </div>
           <div className="flex flex-col justify-end lg:col-span-4 lg:col-start-9">
             <p className="text-lg text-ink-soft lg:text-xl" data-reveal>
-              Napi Organic নিয়ে এসেছে মুচমুচে ব্যানানা চিপসের এক নতুন অভিজ্ঞতা। যত্নসহকারে প্রস্তুত করা প্রতিটি প্যাকেটে থাকুক স্বাদের আনন্দ।
+              Napi Organic-এর লক্ষ্য সহজ — প্রতিদিনের নাস্তায় একটি স্বাস্থ্যকর বিকল্প নিয়ে আসা। অর্গানিক কলা, প্রিজারভেটিভ ছাড়া, আর এমন উপাদান তালিকা যা আপনি পড়েই বুঝবেন।
             </p>
           </div>
         </div>
@@ -34,7 +34,7 @@ export function BrandIntro() {
               imgClassName="scale-110"
             />
             <figcaption className="mt-4 flex justify-between text-sm text-ink-soft">
-              <span>Crispy Banana Chips — {site.product.flavour}</span>
+              <span>অর্গানিক ব্যানানা চিপস — {site.product.flavour}</span>
               <span>{toBnDigits(site.product.weightGrams)} গ্রাম</span>
             </figcaption>
           </figure>
@@ -46,7 +46,7 @@ export function BrandIntro() {
               className="aspect-[5/2] w-full"
             />
             <blockquote className="border-l-2 border-banana pl-6" data-reveal>
-              <p className="display text-2xl text-forest lg:text-[1.9rem]">“বাছাই করা কলা ও মানসম্মত উপকরণে তৈরি”</p>
+              <p className="display text-2xl text-forest lg:text-[1.9rem]">“অর্গানিক কলা · প্রিজারভেটিভ নেই · ভিগান · গ্লুটেন-ফ্রি”</p>
               <cite className="mt-3 block text-sm text-ink-soft not-italic">— Napi Organic প্যাকেট থেকে</cite>
             </blockquote>
           </div>

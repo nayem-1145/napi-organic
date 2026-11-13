@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { SectionHeading } from '../components/Brand';
+import { FlaskConicalOff, Sparkles, Vegan, WheatOff } from '../components/Icons';
 import { site } from '../config/site';
 import { asset } from '../lib/utils';
 
@@ -9,13 +9,13 @@ const Oil = () => (
   <svg viewBox="0 0 120 120" className="h-full w-full" aria-hidden>
     <defs>
       <radialGradient id="oil" cx="38%" cy="40%" r="70%">
-        <stop offset="0" stopColor="#fff3c4" />
-        <stop offset=".35" stopColor="#f2c65a" />
-        <stop offset="1" stopColor="#b9801f" />
+        <stop offset="0" stopColor="#fffbe8" />
+        <stop offset=".4" stopColor="#f6e2a4" />
+        <stop offset="1" stopColor="#d9b25a" />
       </radialGradient>
     </defs>
     <path d="M60 18 C60 18 34 52 34 72 a26 26 0 0 0 52 0 C86 52 60 18 60 18Z" fill="url(#oil)" />
-    <ellipse cx="50" cy="66" rx="5" ry="10" fill="#fff" opacity=".55" transform="rotate(18 50 66)" />
+    <ellipse cx="50" cy="66" rx="5" ry="10" fill="#fff" opacity=".6" transform="rotate(18 50 66)" />
   </svg>
 );
 const Salt = () => (
@@ -32,8 +32,8 @@ const Salt = () => (
           width={s}
           height={s}
           rx="1"
-          fill={i % 3 ? '#f4efe6' : '#e2d6c8'}
-          stroke="#cbbfae"
+          fill={i % 3 ? '#fbf7ef' : '#efd9cf'}
+          stroke="#d4c3b1"
           strokeWidth=".6"
           transform={`rotate(${(i * 37) % 90} ${60 + Math.cos(a) * r} ${62 + Math.sin(a) * r * 0.8})`}
         />
@@ -46,7 +46,7 @@ const Spice = () => (
     {Array.from({ length: 46 }, (_, i) => {
       const a = i * 2.39996;
       const r = 4 + Math.sqrt(i) * 6.4;
-      const colors = ['#a8341a', '#7a4a1e', '#c9852b', '#5a3a1a', '#8c6a2a'];
+      const colors = ['#a8341a', '#7a4a1e', '#c9852b', '#3d2a17', '#8c6a2a'];
       const cumin = i % 4 === 0;
       return (
         <ellipse
@@ -74,59 +74,112 @@ const Sugar = () => (
         <polygon
           key={i}
           points={`${x},${y - s} ${x + s},${y} ${x},${y + s} ${x - s},${y}`}
-          fill={['#b5672a', '#cf8a3d', '#9b5422', '#e0a35a'][i % 4]}
+          fill={['#a5482a', '#c2643a', '#8a3a20', '#d8834f'][i % 4]}
           opacity=".92"
         />
       );
     })}
   </svg>
 );
+const Mango = () => (
+  <svg viewBox="0 0 120 120" className="h-full w-full" aria-hidden>
+    <defs>
+      <radialGradient id="mango" cx="45%" cy="30%" r="75%">
+        <stop offset="0" stopColor="#fff0b8" />
+        <stop offset=".55" stopColor="#f2c25a" />
+        <stop offset="1" stopColor="#d1923a" />
+      </radialGradient>
+    </defs>
+    <path d="M22 86 C30 60 46 46 60 46 C74 46 90 60 98 86 Z" fill="url(#mango)" />
+    {Array.from({ length: 26 }, (_, i) => {
+      const a = i * 2.39996;
+      const r = 8 + Math.sqrt(i) * 7;
+      return <circle key={i} cx={60 + Math.cos(a) * r * 1.3} cy={90 + Math.sin(a) * 4} r={0.9 + (i % 3) * 0.5} fill="#e2a948" opacity=".8" />;
+    })}
+  </svg>
+);
 
-const ITEMS: { name: string; note: string; visual: ReactNode }[] = [
+const ITEMS: { name: string; note: string; tint: string; visual: ReactNode; photo?: boolean }[] = [
   {
-    name: 'কলা',
-    note: 'মূল উপাদান',
+    name: 'অর্গানিক কলা',
+    note: 'মূল উপাদান — প্রকৃতি থেকে সরাসরি',
+    tint: 'from-banana-soft to-banana',
+    photo: true,
     visual: <img src={asset('images/bananas.webp')} alt="পাকা কলা" className="h-full w-full object-cover" loading="lazy" />,
   },
-  { name: 'উদ্ভিজ্জ তেল', note: 'ভাজার জন্য', visual: <Oil /> },
-  { name: 'মিনারেল সল্ট ব্লেন্ড', note: 'স্বাদের ভারসাম্যে', visual: <Salt /> },
-  { name: 'নির্বাচিত মসলা', note: 'চিলি লাইমের ঝাঁঝ', visual: <Spice /> },
-  { name: 'চিনি', note: 'হালকা গ্লেজ', visual: <Sugar /> },
+  { name: 'নারকেল তেল', note: 'হালকা সুবাস আর সোনালি রং', tint: 'from-[#fffaf0] to-[#f6e7c4]', visual: <Oil /> },
+  { name: 'লাল চিনি', note: 'মিষ্টি-ঝাল গ্লেজের ভারসাম্য', tint: 'from-[#fff1e6] to-[#ffd2b0]', visual: <Sugar /> },
+  { name: 'শুকনো আমের গুঁড়া', note: 'লাইমের মতো টক ঝাঁঝ', tint: 'from-[#fff6d6] to-[#ffe08a]', visual: <Mango /> },
+  { name: 'জিরা, ধনিয়া ও গোলমরিচ', note: 'চিলি লাইমের মসলাদার উষ্ণতা', tint: 'from-[#fdeee2] to-[#f7c9a1]', visual: <Spice /> },
+  { name: 'মিনারেল সল্ট ব্লেন্ড', note: 'স্বাদকে করে পূর্ণ', tint: 'from-[#f4f7f2] to-[#dbe9d3]', visual: <Salt /> },
+];
+
+const BENEFITS = [
+  { icon: Vegan, label: 'ভিগান' },
+  { icon: WheatOff, label: 'গ্লুটেন-ফ্রি' },
+  { icon: FlaskConicalOff, label: 'প্রিজারভেটিভ নেই' },
+  { icon: Sparkles, label: 'ভ্যাকুয়াম ড্রায়েড' },
 ];
 
 export function Ingredients() {
   return (
-    <section id="ingredients" className="relative bg-cream-deep/50 py-24 lg:py-36">
-      <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
-        <div className="grid gap-8 lg:grid-cols-12">
-          <SectionHeading eyebrow="উপাদান" title="স্বাদে যা যা থাকছে" className="lg:col-span-6" />
-          <p className="self-end text-lg text-ink-soft lg:col-span-4 lg:col-start-9" data-reveal>
-            পরিচিত, সহজ উপাদান — বাড়তি কিছু নয়। পূর্ণ তালিকা প্যাকেটের পেছনে দেওয়া আছে।
-          </p>
+    <section id="ingredients" className="bg-tropical relative py-24 lg:py-32">
+      <div className="mx-auto grid max-w-[1440px] gap-8 px-5 sm:px-8 lg:grid-cols-12 lg:gap-10 lg:px-12">
+        {/* Transparency card — mirrors the back of the pack */}
+        <div className="lg:col-span-5">
+          <div className="relative overflow-hidden rounded-[2rem] bg-forest p-7 text-cream sm:p-10 lg:sticky lg:top-28" data-reveal>
+            <div aria-hidden className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-banana/25 blur-3xl" />
+            <p className="eyebrow eyebrow-light">উপাদান ও উপকারিতা</p>
+            <h2 className="display mt-5 text-[2rem] sm:text-[2.6rem]">যা খাচ্ছেন, তা জানুন</h2>
+            <p className="mt-4 text-cream/75">
+              অর্গানিক কলা আর পরিচিত, সহজ উপাদান — কোনো প্রিজারভেটিভ নয়। নিচের তালিকা হুবহু প্যাকেটের পেছন থেকে নেওয়া।
+            </p>
+
+            <ul className="mt-7 grid grid-cols-2 gap-2.5">
+              {BENEFITS.map(({ icon: Icon, label }) => (
+                <li
+                  key={label}
+                  className="flex items-center gap-2.5 rounded-2xl bg-white/[0.07] px-3.5 py-3 text-sm font-semibold ring-1 ring-white/10 transition-colors duration-300 hover:bg-white/[0.12]"
+                >
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-banana text-forest-deep">
+                    <Icon size={17} strokeWidth={2} aria-hidden />
+                  </span>
+                  {label}
+                </li>
+              ))}
+            </ul>
+
+            <figure className="mt-7 rounded-2xl bg-forest-deep/60 p-5 ring-1 ring-white/10">
+              <figcaption className="text-xs font-semibold tracking-[0.14em] text-banana uppercase">Ingredients — প্যাকেট থেকে</figcaption>
+              <p className="mt-2 text-sm leading-relaxed text-cream/85" lang="en">
+                Organic Bananas, Coconut Oil, Red Sugar, Cumin, Coriander, Dried Mango Powder, Black Pepper, Mineral Salt Blend and
+                Selected Spices.
+              </p>
+            </figure>
+          </div>
         </div>
 
-        <ul className="mt-16 grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 lg:mt-24 lg:grid-cols-5 lg:gap-x-10">
-          {ITEMS.map((it, i) => (
-            <li key={it.name} className={`group ${i === 0 ? 'col-span-2 sm:col-span-1' : ''}`} data-reveal>
+        {/* Ingredient cards */}
+        <ul className="grid grid-cols-2 gap-3 sm:gap-5 lg:col-span-7 lg:grid-cols-3 lg:gap-6">
+          {ITEMS.map((it) => (
+            <li key={it.name} className="group card card-hover flex flex-col items-center p-4 text-center sm:p-6" data-reveal>
               <div
-                className={`relative mx-auto aspect-square overflow-hidden rounded-full bg-cream shadow-[inset_0_0_0_1px_rgb(37_42_36/0.06),0_30px_60px_-30px_rgb(36_75_53/0.35)] transition-transform duration-700 ease-(--ease-premium) group-hover:-translate-y-2 ${
-                  i === 0 ? 'max-w-[15rem]' : 'max-w-[12rem] p-5'
-                } ${i % 2 ? 'lg:mt-14' : ''}`}
+                className={`relative aspect-square w-full max-w-[9rem] overflow-hidden rounded-full bg-gradient-to-br shadow-[inset_0_0_0_1px_rgb(31_42_36/0.06)] transition-transform duration-700 ease-(--ease-spring) group-hover:scale-[1.06] group-hover:rotate-3 ${it.tint} ${
+                  it.photo ? '' : 'p-4'
+                }`}
               >
                 {it.visual}
               </div>
-              <div className="mt-6 text-center">
-                <h3 className="display text-xl text-forest lg:text-2xl">{it.name}</h3>
-                <p className="mt-1 text-sm text-ink-soft">{it.note}</p>
-              </div>
+              <h3 className="display mt-5 text-[1.05rem] leading-snug text-forest sm:text-xl">{it.name}</h3>
+              <p className="mt-1 text-[0.8rem] text-ink-soft sm:text-sm">{it.note}</p>
             </li>
           ))}
+          {site.showPlaceholderNotes && (
+            <li className="col-span-full text-center text-xs text-ink-soft/80">
+              কলার ছবিটি আসল প্রোডাক্ট শুট থেকে; বাকিগুলো প্রতীকী চিত্র — উপাদানের আসল ফটোগ্রাফি পেলে বদলে দেওয়া হবে।
+            </li>
+          )}
         </ul>
-        {site.showPlaceholderNotes && (
-          <p className="mt-14 text-center text-xs text-ink-soft/80">
-            কলার ছবিটি আসল প্রোডাক্ট শুট থেকে; বাকিগুলো প্রতীকী চিত্র — উপাদানের আসল ফটোগ্রাফি পেলে বদলে দেওয়া হবে।
-          </p>
-        )}
       </div>
     </section>
   );

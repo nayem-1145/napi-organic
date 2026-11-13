@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { Nav } from './components/Nav';
+import { FloatingActions } from './components/FloatingActions';
+import { StickyOrderBar } from './components/StickyOrderBar';
 import { loadMotion, startSmoothScroll } from './lib/motion';
 import { useStore } from './lib/store';
 import { prefersReducedMotion } from './lib/utils';
@@ -7,13 +9,14 @@ import { BrandIntro } from './sections/BrandIntro';
 import { BrandStory } from './sections/BrandStory';
 import { Experience } from './sections/Experience';
 import { Faq } from './sections/Faq';
-import { FinalCta } from './sections/FinalCta';
+import { OrderSection } from './sections/OrderSection';
 import { Footer } from './sections/Footer';
 import { Ingredients } from './sections/Ingredients';
+import { KidsSection } from './sections/KidsSection';
 import { Lifestyle } from './sections/Lifestyle';
 import { ProductShowcase } from './sections/ProductShowcase';
 import { Reviews } from './sections/Reviews';
-import { WhyNapi } from './sections/WhyNapi';
+import { TrustBadges } from './sections/TrustBadges';
 
 export default function App() {
   const engine = useStore((s) => s.engine);
@@ -33,7 +36,20 @@ export default function App() {
           start: 'top 88%',
           once: true,
           onEnter: (els) =>
-            gsap.to(els, { opacity: 1, y: 0, duration: 1.1, ease: 'expo.out', stagger: 0.09, overwrite: true }),
+            gsap.to(els, {
+              opacity: 1,
+              y: 0,
+              duration: 1.1,
+              ease: 'expo.out',
+              stagger: 0.09,
+              overwrite: true,
+              // hand control back to CSS so hover transforms on cards keep working
+              onComplete: () =>
+                els.forEach((el) => {
+                  el.setAttribute('data-revealed', '');
+                  gsap.set(el, { clearProps: 'transform,opacity' });
+                }),
+            }),
         });
         gsap.utils.toArray<HTMLElement>('[data-parallax]').forEach((el) => {
           gsap.fromTo(
@@ -66,17 +82,20 @@ export default function App() {
       <Nav />
       <main>
         <Experience />
+        <KidsSection />
+        <TrustBadges />
         <BrandIntro />
-        <WhyNapi />
         <ProductShowcase />
         <Ingredients />
+        <Reviews />
         <BrandStory />
         <Lifestyle />
-        <Reviews />
         <Faq />
-        <FinalCta />
+        <OrderSection />
       </main>
       <Footer />
+      <StickyOrderBar />
+      <FloatingActions />
     </>
   );
 }

@@ -37,11 +37,11 @@ export function Lifestyle() {
         </div>
       )}
       <div className="relative mx-auto w-full max-w-[1440px] px-5 pb-20 sm:px-8 lg:px-12 lg:pb-28">
-        <p className="eyebrow mb-6 !text-banana" data-reveal>
-          প্রতিদিনের মুহূর্ত
+        <p className="eyebrow eyebrow-light mb-6" data-reveal>
+          প্রতিদিনের অভ্যাস
         </p>
         <h2 className="display max-w-4xl text-[2.3rem] sm:text-6xl lg:text-[4.8rem]" data-reveal>
-          আড্ডা হোক কিংবা অবসর, মুচমুচে স্বাদ থাকুক পাশে।
+          স্কুলের টিফিনে, খেলার ফাঁকে — স্বাস্থ্যকর নাস্তা থাকুক বাচ্চার সাথে।
         </h2>
         {!photo && site.showPlaceholderNotes && (
           <p className="mt-8 text-xs text-cream/50">

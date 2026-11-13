@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { scrollToId, toBnDigits } from '../lib/utils';
-import { whatsappOrderUrl } from '../lib/whatsapp';
-import { LogoTab } from './Brand';
-import { Menu, X } from './Icons';
+import { goToOrder, LogoTab } from './Brand';
+import { Menu, ShoppingCart, X } from './Icons';
 
 export const NAV_LINKS = [
-  { id: 'brand', label: 'আমাদের গল্প' },
+  { id: 'kids', label: 'বাচ্চাদের জন্য' },
   { id: 'why', label: 'কেন Napi' },
-  { id: 'product', label: 'পণ্য' },
+  { id: 'product', label: 'প্যাকেজ' },
   { id: 'ingredients', label: 'উপাদান' },
+  { id: 'reviews', label: 'মতামত' },
   { id: 'faq', label: 'প্রশ্নোত্তর' },
 ];
 
@@ -39,7 +39,7 @@ export function Nav() {
     <>
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-500 ${
-          scrolled ? 'bg-cream/80 shadow-[0_1px_0_rgb(37_42_36/0.08)] backdrop-blur-xl' : ''
+          scrolled ? 'bg-cream/85 shadow-[0_1px_0_rgb(31_42_36/0.08),0_12px_30px_-20px_rgb(27_77_62/0.35)] backdrop-blur-xl' : ''
         }`}
       >
         <div className="mx-auto flex h-16 max-w-[1440px] items-start justify-between px-5 sm:px-8 lg:h-20 lg:px-12">
@@ -54,19 +54,19 @@ export function Nav() {
                 className="group relative py-2 text-[0.95rem] font-medium text-ink/80 transition-colors hover:text-forest"
               >
                 {l.label}
-                <span className="absolute inset-x-0 bottom-1 h-px origin-left scale-x-0 bg-forest transition-transform duration-500 ease-(--ease-premium) group-hover:scale-x-100" />
+                <span className="absolute inset-x-0 bottom-1 h-0.5 origin-left scale-x-0 rounded-full bg-amber transition-transform duration-500 ease-(--ease-premium) group-hover:scale-x-100" />
               </button>
             ))}
           </nav>
           <div className="flex h-full items-center gap-3">
-            <a
-              href={whatsappOrderUrl(1)}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              onClick={() => goToOrder()}
               className="btn btn-primary !min-h-11 !px-5 !py-2 text-sm max-sm:hidden"
             >
+              <ShoppingCart size={17} strokeWidth={2} aria-hidden />
               অর্ডার করুন
-            </a>
+            </button>
             <button
               className="grid h-11 w-11 place-items-center rounded-full text-forest lg:hidden"
               onClick={() => setOpen(true)}
@@ -108,9 +108,10 @@ export function Nav() {
           ))}
         </nav>
         <div className="px-8 pb-10">
-          <a href={whatsappOrderUrl(1)} target="_blank" rel="noopener noreferrer" className="btn btn-light w-full">
+          <button type="button" onClick={() => go('order')} className="btn btn-primary w-full">
+            <ShoppingCart size={19} strokeWidth={2} aria-hidden />
             এখনই অর্ডার করুন
-          </a>
+          </button>
         </div>
       </div>
     </>
