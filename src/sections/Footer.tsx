@@ -68,6 +68,21 @@ export function Footer() {
           </p>
           <p>বাংলাদেশের ব্র্যান্ড</p>
         </div>
+        {site.photoCredits.length > 0 && (
+          <p className="border-t border-cream/10 py-5 text-xs leading-relaxed text-cream/40">
+            ছবি:{' '}
+            {site.photoCredits.map((c, i) => (
+              <span key={c.file}>
+                {i > 0 && ' · '}
+                <a href={c.url} target="_blank" rel="noopener noreferrer" className="underline decoration-cream/20 underline-offset-2 hover:text-banana">
+                  “{c.title}”
+                </a>{' '}
+                — {c.author}, {c.license}
+              </span>
+            ))}{' '}
+            (Wikimedia Commons, আকার পরিবর্তিত)
+          </p>
+        )}
       </div>
     </footer>
   );

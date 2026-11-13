@@ -1,5 +1,5 @@
 import { SectionHeading } from '../components/Brand';
-import { FlaskConicalOff, Recycle, Sprout, Vegan, Wind } from '../components/Icons';
+import { FlaskConicalOff, Recycle, ShieldCheck, Sprout, Vegan } from '../components/Icons';
 import { toBnDigits } from '../lib/utils';
 import { site } from '../config/site';
 
@@ -11,14 +11,20 @@ import { site } from '../config/site';
 const BADGES = [
   {
     icon: Sprout,
-    title: 'অর্গানিক কলা',
+    title: site.claims.organic,
     text: 'মূল উপাদান অর্গানিক কলা — প্রকৃতি থেকে সরাসরি।',
     tint: 'from-[#e3f1d6] to-[#c5e3ae] text-forest',
   },
   {
+    icon: ShieldCheck,
+    title: site.claims.pure,
+    text: 'প্যাকেটে লেখা উপাদানের বাইরে কিছু মেশানো নেই।',
+    tint: 'from-[#ffe2c9] to-amber text-forest-deep',
+  },
+  {
     icon: FlaskConicalOff,
     title: 'প্রিজারভেটিভ নেই',
-    text: 'কোনো প্রিজারভেটিভ যোগ করা হয়নি — বাচ্চার টিফিনে নিশ্চিন্তে দিন।',
+    text: 'কোনো প্রিজারভেটিভ যোগ করা হয়নি — শিশুকে নিশ্চিন্তে দিন।',
     tint: 'from-banana-soft to-banana text-forest-deep',
   },
   {
@@ -26,12 +32,6 @@ const BADGES = [
     title: 'ভিগান ও গ্লুটেন-ফ্রি',
     text: 'উদ্ভিদভিত্তিক উপাদানে তৈরি, গ্লুটেন-মুক্ত।',
     tint: 'from-[#d9eee6] to-[#9fd1bd] text-forest',
-  },
-  {
-    icon: Wind,
-    title: 'ভ্যাকুয়াম ড্রায়েড',
-    text: 'পাতলা করে কাটা কলা মসলায় ভিজিয়ে ভ্যাকুয়াম পদ্ধতিতে শুকানো।',
-    tint: 'from-[#ffe2c9] to-amber text-forest-deep',
   },
 ];
 
@@ -42,8 +42,8 @@ export function TrustBadges() {
         <SectionHeading
           center
           eyebrow="কেন Napi Organic"
-          title="স্বাস্থ্যকর স্ন্যাকস, স্বচ্ছ উপাদান"
-          subtitle="বাচ্চা কী খাচ্ছে, তা জানার অধিকার প্রতিটি বাবা-মায়ের। তাই প্রতিটি দাবি আমাদের প্যাকেটেই ছাপা আছে।"
+          title="১০০% বিশুদ্ধ, কোনো ভেজাল নেই"
+          subtitle="শিশু হোক বা বড় — যা খাচ্ছেন, তা জানার অধিকার সবার। তাই প্রতিটি দাবি আমাদের প্যাকেটেই ছাপা আছে।"
         />
 
         <ul className="mt-12 grid grid-cols-2 gap-3 sm:gap-5 lg:mt-16 lg:grid-cols-4 lg:gap-6">
@@ -64,6 +64,8 @@ export function TrustBadges() {
           <span className="inline-flex items-center gap-2">
             <Recycle size={16} className="text-sage" aria-hidden /> রিসাইকেলযোগ্য প্যাকেজিং
           </span>
+          <span aria-hidden className="h-1 w-1 rounded-full bg-amber" />
+          <span>ভ্যাকুয়াম ড্রায়েড</span>
           <span aria-hidden className="h-1 w-1 rounded-full bg-amber" />
           <span>জিপ-লক প্যাক</span>
           <span aria-hidden className="h-1 w-1 rounded-full bg-amber" />

@@ -19,7 +19,7 @@ export function BrandIntro() {
           </div>
           <div className="flex flex-col justify-end lg:col-span-4 lg:col-start-9">
             <p className="text-lg text-ink-soft lg:text-xl" data-reveal>
-              Napi Organic-এর লক্ষ্য সহজ — প্রতিদিনের নাস্তায় একটি স্বাস্থ্যকর বিকল্প নিয়ে আসা। অর্গানিক কলা, প্রিজারভেটিভ ছাড়া, আর এমন উপাদান তালিকা যা আপনি পড়েই বুঝবেন।
+              Napi Organic-এর লক্ষ্য সহজ — শিশুদের হাতে নিশ্চিন্তে তুলে দেওয়ার মতো একটি বিশুদ্ধ নাস্তা, যা পরিবারের সবাই উপভোগ করবে। ১০০% অর্গানিক কলা, প্রিজারভেটিভ ও ভেজাল ছাড়া।
             </p>
           </div>
         </div>
@@ -46,7 +46,7 @@ export function BrandIntro() {
               className="aspect-[5/2] w-full"
             />
             <blockquote className="border-l-2 border-banana pl-6" data-reveal>
-              <p className="display text-2xl text-forest lg:text-[1.9rem]">“অর্গানিক কলা · প্রিজারভেটিভ নেই · ভিগান · গ্লুটেন-ফ্রি”</p>
+              <p className="display text-2xl text-forest lg:text-[1.9rem]">“১০০% অর্গানিক কলা · ভেজালমুক্ত · প্রিজারভেটিভ নেই”</p>
               <cite className="mt-3 block text-sm text-ink-soft not-italic">— Napi Organic প্যাকেট থেকে</cite>
             </blockquote>
           </div>

@@ -22,7 +22,7 @@ type Errors = Partial<Record<keyof Fields | 'area', string>>;
 const EMPTY: Fields = { name: '', phone: '', address: '', note: '' };
 const MAX_QTY = 10;
 
-const HEALTH_POINTS = ['অর্গানিক কলা থেকে তৈরি', 'কোনো প্রিজারভেটিভ নেই', 'ভিগান ও গ্লুটেন-ফ্রি', 'টিফিন-বান্ধব জিপ-লক প্যাক'];
+const HEALTH_POINTS = [site.claims.organic, 'ভেজালমুক্ত ও বিশুদ্ধ', 'কোনো প্রিজারভেটিভ নেই', 'ভিগান ও গ্লুটেন-ফ্রি'];
 
 function validate(f: Fields, area: DeliveryArea | null): Errors {
   const e: Errors = {};
@@ -128,7 +128,7 @@ export function OrderSection() {
             অর্ডার করুন
           </p>
           <h2 className="display mt-5 text-[2.2rem] text-balance text-forest-deep sm:text-5xl lg:text-[3.4rem]" data-reveal>
-            বাচ্চার টিফিনের স্বাস্থ্যকর নাস্তা, আজই অর্ডার করুন
+            শিশু ও পরিবারের জন্য বিশুদ্ধ নাস্তা, আজই অর্ডার করুন
           </h2>
           <p className="mt-5 max-w-md text-lg text-forest-deep/80" data-reveal>
             ছোট্ট ফর্মটি পূরণ করুন — অর্ডার নিশ্চিত করতে আমরা আপনাকে কল করব। প্যাকেট পৌঁছে যাবে আপনার দরজায়।
@@ -346,7 +346,7 @@ export function OrderSection() {
               <input
                 id={`${uid}-note`}
                 className="field"
-                placeholder="যেমন: স্কুল থেকে ফেরার পর বিকেলে ডেলিভারি দিলে ভালো হয়"
+                placeholder="যেমন: বিকেলে ডেলিভারি দিলে ভালো হয়"
                 value={fields.note}
                 onChange={(e) => set('note')(e.target.value)}
               />

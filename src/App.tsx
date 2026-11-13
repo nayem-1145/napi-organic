@@ -29,28 +29,37 @@ export default function App() {
     startSmoothScroll().then((stop) => (cancelled ? stop() : (stopScroll = stop)));
     loadMotion().then((kit) => {
       if (!kit || cancelled || prefersReducedMotion()) return;
-      const { gsap, ScrollTrigger } = kit;
+      const { gsap } = kit;
       document.documentElement.classList.add('motion-ready');
+      // Reveal on actual visibility (IntersectionObserver), not precomputed scroll
+      // positions — those go stale when the pinned 3D section or images resize,
+      // which left elements hidden after fast scrolls on mobile.
+      const io = new IntersectionObserver(
+        (entries) => {
+          const els = entries.filter((e) => e.isIntersecting).map((e) => e.target as HTMLElement);
+          if (!els.length) return;
+          els.forEach((el) => io.unobserve(el));
+          gsap.to(els, {
+            opacity: 1,
+            y: 0,
+            duration: 1.1,
+            ease: 'expo.out',
+            stagger: 0.09,
+            overwrite: true,
+            // hand control back to CSS so hover transforms on cards keep working
+            onComplete: () =>
+              els.forEach((el) => {
+                el.setAttribute('data-revealed', '');
+                gsap.set(el, { clearProps: 'transform,opacity' });
+              }),
+          });
+        },
+        { rootMargin: '0px 0px -12% 0px' },
+      );
+      document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
+      const stopObserving = () => io.disconnect();
+
       const ctx = gsap.context(() => {
-        ScrollTrigger.batch('[data-reveal]', {
-          start: 'top 88%',
-          once: true,
-          onEnter: (els) =>
-            gsap.to(els, {
-              opacity: 1,
-              y: 0,
-              duration: 1.1,
-              ease: 'expo.out',
-              stagger: 0.09,
-              overwrite: true,
-              // hand control back to CSS so hover transforms on cards keep working
-              onComplete: () =>
-                els.forEach((el) => {
-                  el.setAttribute('data-revealed', '');
-                  gsap.set(el, { clearProps: 'transform,opacity' });
-                }),
-            }),
-        });
         gsap.utils.toArray<HTMLElement>('[data-parallax]').forEach((el) => {
           gsap.fromTo(
             el,
@@ -59,7 +68,10 @@ export default function App() {
           );
         });
       });
-      killReveals = () => ctx.revert();
+      killReveals = () => {
+        stopObserving();
+        ctx.revert();
+      };
     });
     return () => {
       cancelled = true;

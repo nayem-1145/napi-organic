@@ -3,17 +3,34 @@ import { useStore } from '../lib/store';
 import { asset } from '../lib/utils';
 
 /**
- * Full-bleed cinematic moment. Uses `site.images.lifestyle` when supplied;
- * until then a warm-light composition built from the real chips photography.
+ * Full-bleed cinematic moment. Uses `site.images.lifestyle` when supplied (children
+ * playing in a Bangladeshi village — text sits over the sky at the top); otherwise a
+ * warm-light composition built from the real chips photography.
  */
 export function Lifestyle() {
   const photo = site.images.lifestyle;
   // still rendered by the 3D engine: the opened package beside the filled stoneware bowl
   const shot = useStore((s) => s.finalShot);
   return (
-    <section className="grain relative isolate flex min-h-[88svh] items-end overflow-hidden bg-forest-deep text-cream lg:min-h-[100svh]">
+    <section
+      id="moments"
+      className={`grain relative isolate flex min-h-[88svh] overflow-hidden bg-forest-deep text-cream lg:min-h-[100svh] ${
+        photo ? 'items-start' : 'items-end'
+      }`}
+    >
       {photo ? (
-        <img src={photo} alt="কাঠের টেবিলে সিরামিক বাটিতে সোনালি ব্যানানা চিপস" className="absolute inset-0 -z-10 h-full w-full object-cover" data-parallax loading="lazy" />
+        <div className="absolute inset-0 -z-10">
+          <img
+            src={asset(photo)}
+            alt="বাংলাদেশের হাওর এলাকার গ্রামে সাইকেলের টায়ার নিয়ে দৌড়ে খেলছে একদল শিশু"
+            className="h-full w-full scale-110 object-cover object-[50%_85%]"
+            data-parallax
+            loading="lazy"
+            decoding="async"
+          />
+          {/* darken the sky so the headline reads, keep the children bright */}
+          <div className="absolute inset-0 bg-gradient-to-b from-forest-deep/90 via-forest-deep/45 to-transparent" />
+        </div>
       ) : (
         <div className="absolute inset-0 -z-10" aria-hidden>
           {/* sunlight through a window */}
@@ -36,18 +53,13 @@ export function Lifestyle() {
           <div className="absolute inset-0 bg-gradient-to-r from-forest-deep via-forest-deep/70 to-transparent" />
         </div>
       )}
-      <div className="relative mx-auto w-full max-w-[1440px] px-5 pb-20 sm:px-8 lg:px-12 lg:pb-28">
+      <div className={`relative mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-12 ${photo ? 'pt-28 lg:pt-36' : 'pb-20 lg:pb-28'}`}>
         <p className="eyebrow eyebrow-light mb-6" data-reveal>
-          প্রতিদিনের অভ্যাস
+          বাংলার মাটি থেকে
         </p>
-        <h2 className="display max-w-4xl text-[2.3rem] sm:text-6xl lg:text-[4.8rem]" data-reveal>
-          স্কুলের টিফিনে, খেলার ফাঁকে — স্বাস্থ্যকর নাস্তা থাকুক বাচ্চার সাথে।
+        <h2 className="display max-w-4xl text-[2.3rem] text-balance sm:text-6xl lg:text-[4.6rem]" data-reveal>
+          ছোটদের হাসিতে, বড়দের আড্ডায় — বিশুদ্ধ নাস্তা থাকুক সবসময়।
         </h2>
-        {!photo && site.showPlaceholderNotes && (
-          <p className="mt-8 text-xs text-cream/50">
-            ফটো প্লেসহোল্ডার: কাঠের টেবিলে সিরামিক বাটিতে সোনালি চিপস, জানালা দিয়ে আসা উষ্ণ রোদ।
-          </p>
-        )}
       </div>
     </section>
   );

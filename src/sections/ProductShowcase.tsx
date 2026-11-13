@@ -132,7 +132,7 @@ export function ProductShowcase() {
           center
           eyebrow="প্যাকেজ বেছে নিন"
           title="আপনার জন্য সঠিক প্যাক"
-          subtitle={`নিজের জন্য হোক বা পুরো পরিবারের — প্রতিটি ${toBnDigits(site.product.weightGrams)} গ্রাম প্যাকে অর্গানিক কলা থেকে তৈরি, প্রিজারভেটিভমুক্ত স্বাস্থ্যকর নাস্তা।`}
+          subtitle={`শিশুর জন্য হোক বা পুরো পরিবারের — প্রতিটি ${toBnDigits(site.product.weightGrams)} গ্রাম প্যাকে ১০০% অর্গানিক কলা থেকে তৈরি, ভেজালমুক্ত স্বাস্থ্যকর নাস্তা।`}
         />
 
         <ul className="mx-auto mt-16 grid max-w-6xl items-stretch gap-6 md:grid-cols-3 lg:mt-20 lg:gap-8">

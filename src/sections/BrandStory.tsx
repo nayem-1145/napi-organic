@@ -13,7 +13,7 @@ const STEPS = [
   {
     title: 'বাছাই করা অর্গানিক কলা',
     text: 'মূল উপাদান অর্গানিক কলা — দেখে-শুনে বাছাই করা, যাতে প্রতিটি প্যাকেটে থাকে একই মান।',
-    img: () => asset('images/bananas.webp'),
+    img: () => 'images/bananas.webp',
     brief: '',
     tone: 'warm' as const,
   },
@@ -27,7 +27,7 @@ const STEPS = [
   {
     title: 'আপনার হাতে',
     text: 'রিসাইকেলযোগ্য জিপ-লক প্যাকে স্বাস্থ্যকর নাস্তা — যখন খুশি খুলুন, আবার আটকে রাখুন।',
-    img: () => asset('images/product-photo.webp'),
+    img: () => 'images/product-photo.webp',
     brief: '',
     tone: 'cream' as const,
   },
@@ -46,7 +46,10 @@ export function BrandStory() {
               <article key={s.title} className="grid items-center gap-8 lg:grid-cols-12 lg:gap-10">
                 <div className={`lg:col-span-7 ${flip ? 'lg:order-2 lg:col-start-6' : ''}`} data-reveal>
                   <Photo
-                    src={s.img()}
+                    src={(() => {
+                      const p = s.img();
+                      return p && !p.startsWith('http') && !p.startsWith('data:') ? asset(p) : p;
+                    })()}
                     alt={s.title}
                     brief={s.brief}
                     tone={s.tone}

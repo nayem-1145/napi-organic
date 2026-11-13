@@ -56,6 +56,24 @@
     max-width: 100%;
     display: block;
   }
+  /* Tailwind v4 resets buttons to the default cursor — every clickable thing gets a pointer */
+  a[href],
+  button,
+  [role='button'],
+  [role='tab'],
+  summary,
+  select,
+  label:has(> input[type='radio']),
+  label:has(> input[type='checkbox']),
+  input[type='radio'],
+  input[type='checkbox'],
+  input[type='submit'] {
+    cursor: pointer;
+  }
+  button:disabled,
+  [aria-disabled='true'] {
+    cursor: not-allowed;
+  }
 }
 
 @layer components {

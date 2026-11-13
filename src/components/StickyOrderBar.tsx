@@ -60,7 +60,7 @@ export function StickyOrderBar() {
         <div className="min-w-0 flex-1 leading-tight">
           <p className="truncate text-sm font-semibold text-forest">অর্গানিক ব্যানানা চিপস</p>
           <p className="truncate text-xs text-ink-soft">
-            {fromPrice !== null ? `${formatBdt(fromPrice)} থেকে · ` : 'বাচ্চার টিফিনের জন্য · '}
+            {fromPrice !== null ? `${formatBdt(fromPrice)} থেকে · ` : 'ভেজালমুক্ত · '}
             {toBnDigits(site.product.weightGrams)} গ্রাম
           </p>
         </div>

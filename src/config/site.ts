@@ -57,9 +57,20 @@ export const site = {
   brand: {
     name: 'Napi Organic',
     legalName: 'Napi Organic Ltd.', // as printed on the package ("Distributed by")
-    tagline: 'বাচ্চার টিফিনের স্বাস্থ্যকর সঙ্গী',
+    tagline: 'শিশুর জন্য স্বাস্থ্যকর, সবার জন্য বিশুদ্ধ',
     description:
-      'অর্গানিক কলা থেকে তৈরি, প্রিজারভেটিভমুক্ত, ভিগান ও গ্লুটেন-ফ্রি ব্যানানা চিপস — বাচ্চার টিফিন আর পরিবারের নাস্তায় নিশ্চিন্ত পছন্দ।',
+      '১০০% অর্গানিক কলা থেকে তৈরি, প্রিজারভেটিভ ও ভেজালমুক্ত ব্যানানা চিপস — শিশুদের জন্য নিশ্চিন্ত, আর বিশুদ্ধ নাস্তা যারা ভালোবাসেন সেই সব বয়সের মানুষের জন্য।',
+  },
+
+  /**
+   * Headline claims used across the page — change them here once.
+   * The package lists "Organic Bananas" (not every ingredient as organic), so the
+   * organic claim names the bananas. If the whole product is certified organic,
+   * change `organic` to '১০০% অর্গানিক'.
+   */
+  claims: {
+    organic: '১০০% অর্গানিক কলা',
+    pure: 'ভেজালমুক্ত ও বিশুদ্ধ',
   },
 
   product: {
@@ -80,28 +91,28 @@ export const site = {
     {
       id: 'single',
       name: 'সিঙ্গেল প্যাক',
-      tagline: 'বাচ্চার পছন্দ হয় কিনা দেখে নিন',
+      tagline: 'প্রথমবার চেখে দেখুন',
       packs: 1,
       priceBdt: null,
-      perks: ['১টি ১৫০ গ্রাম জিপ-লক প্যাক', 'প্রথমবার চেখে দেখার জন্য আদর্শ'],
+      perks: ['১টি ১৫০ গ্রাম জিপ-লক প্যাক', 'শিশু বা নিজের জন্য — চেখে দেখার জন্য আদর্শ'],
     },
     {
       id: 'family',
-      name: 'স্কুল টিফিন প্যাক',
-      tagline: 'বাচ্চার স্কুল টিফিনের জন্য',
+      name: 'ফ্যামিলি প্যাক',
+      tagline: 'শিশু থেকে বড় — পরিবারের সবার জন্য',
       packs: 3,
       priceBdt: null, // TODO e.g. 3 × price minus a discount
       featured: true,
-      ribbon: 'টিফিনের জন্য প্রস্তাবিত',
-      perks: ['৩টি ১৫০ গ্রাম জিপ-লক প্যাক', 'টিফিন বক্সে অল্প করে দেওয়া যায়', 'বিকেলের নাস্তাতেও চলে'],
+      ribbon: 'প্রস্তাবিত',
+      perks: ['৩টি ১৫০ গ্রাম জিপ-লক প্যাক', 'শিশুদের নাস্তা আর বড়দের আড্ডায়', 'খোলার পর জিপ আটকে রাখা যায়'],
     },
     {
       id: 'value',
-      name: 'ফ্যামিলি বান্ডেল',
-      tagline: 'ভাই-বোন সবার জন্য, মাসের স্টক',
+      name: 'ভ্যালু বান্ডেল',
+      tagline: 'বড় পরিবার বা উপহারের জন্য',
       packs: 5,
       priceBdt: null, // TODO
-      perks: ['৫টি ১৫০ গ্রাম জিপ-লক প্যাক', 'একাধিক বাচ্চার টিফিনের জন্য', 'বারবার অর্ডারের ঝামেলা নেই'],
+      perks: ['৫টি ১৫০ গ্রাম জিপ-লক প্যাক', 'যৌথ পরিবার বা প্রিয়জনকে উপহার', 'বারবার অর্ডারের ঝামেলা নেই'],
     },
   ] as ProductBundle[],
 
@@ -146,13 +157,41 @@ export const site = {
    * placeholder is shown. Drop files into /public/images and set the paths.
    */
   images: {
-    plantation: null as string | null, // banana plantation, early light
-    preparation: null as string | null, // slicing / drying in the kitchen
-    lifestyle: null as string | null, // full-width: chips in a ceramic bowl on a wooden table, warm sunlight
+    plantation: 'images/plantation-bd.webp' as string | null, // aerial banana plantation, Bangladesh
+    preparation: 'images/chips-pile.webp' as string | null, // our own product photo
+    lifestyle: 'images/kids-village.webp' as string | null, // full-width: children playing in a Bangladeshi haor village
     ingredients: null as string | null, // optional flat-lay of all ingredients
-    /** Kids section: e.g. 'images/kids-tiffin.webp' — chips in a school tiffin box, child smiling (get parental consent) */
-    kids: null as string | null,
+    /** Kids section — replace with your own shoot (children with the product, parental consent) when available */
+    kids: 'images/village-football.webp' as string | null,
   },
+
+  /**
+   * Stock photos from Wikimedia Commons. Their licences REQUIRE this credit,
+   * which the footer shows. Remove an entry only when you replace that photo.
+   */
+  photoCredits: [
+    {
+      file: 'plantation-bd.webp',
+      title: 'Aerial view of a banana plantation in Bangladesh',
+      author: 'The Roving Rokibul',
+      license: 'CC BY-SA 4.0',
+      url: 'https://commons.wikimedia.org/wiki/File:Aerial_view_of_a_banana_plantation_in_Bangladesh.jpg',
+    },
+    {
+      file: 'kids-village.webp',
+      title: 'Childhood Memories',
+      author: 'Ashef Emran',
+      license: 'CC BY-SA 4.0',
+      url: 'https://commons.wikimedia.org/wiki/File:Childhood_Memories.jpg',
+    },
+    {
+      file: 'village-football.webp',
+      title: 'Football in the village of Bangladesh',
+      author: 'Goutam',
+      license: 'CC BY-SA 3.0',
+      url: 'https://commons.wikimedia.org/wiki/File:Football_in_the_village_of_Bangladesh.jpg',
+    },
+  ],
   /** Shows small "placeholder" notes next to illustrated/placeholder visuals. Turn off for launch. */
   showPlaceholderNotes: true as boolean,
 
@@ -164,21 +203,21 @@ export const site = {
   testimonialsAreSamples: true as boolean,
   testimonials: [
     {
-      name: 'নমুনা অভিভাবক ১',
-      location: 'ঢাকা · ক্লাস থ্রির মা',
-      text: 'প্রিজারভেটিভ নেই দেখে মেয়ের স্কুল টিফিনে নিশ্চিন্তে দিচ্ছি। উপাদান তালিকাটা পড়েই ভরসা পেয়েছি।',
+      name: 'নমুনা ক্রেতা ১',
+      location: 'ঢাকা · ছয় বছরের মেয়ের মা',
+      text: 'মেয়ের জন্য প্রিজারভেটিভ ছাড়া কিছু খুঁজছিলাম। উপাদান তালিকাটা পড়েই ভরসা পেয়েছি, এখন নিশ্চিন্তে দিই।',
       rating: 5,
     },
     {
-      name: 'নমুনা অভিভাবক ২',
-      location: 'চট্টগ্রাম · দুই বাচ্চার বাবা',
-      text: 'বাচ্চারা স্কুল থেকে ফিরে কিছু একটা চায়। এখন বিকেলের নাস্তায় এটাই দিই — অর্গানিক কলা দিয়ে তৈরি, তাই মন থেকে দিতে পারি।',
+      name: 'নমুনা ক্রেতা ২',
+      location: 'চট্টগ্রাম · চাকরিজীবী',
+      text: 'বাজারের নাস্তায় কী মেশানো থাকে বোঝা যায় না। এটা অর্গানিক কলা দিয়ে তৈরি, ভেজাল নেই — অফিসের ডেস্কে এখন এটাই রাখি।',
       rating: 5,
     },
     {
-      name: 'নমুনা অভিভাবক ৩',
-      location: 'সিলেট · ক্লাস ফাইভের মা',
-      text: 'জিপ-লক থাকায় এক প্যাকেট থেকে কয়েক দিনের টিফিন হয়ে যায়। ছেলের জন্য গ্লুটেন-ফ্রি স্ন্যাকস খুঁজছিলাম, পেয়ে গেছি।',
+      name: 'নমুনা ক্রেতা ৩',
+      location: 'সিলেট · যৌথ পরিবার',
+      text: 'নাতি-নাতনি থেকে বাবা-মা, বাসার সবাই খায়। গ্লুটেন-ফ্রি আর বিশুদ্ধ, তাই সবার জন্য একসাথে নিই।',
       rating: 5,
     },
   ] as Testimonial[],
@@ -186,26 +225,30 @@ export const site = {
   /** FAQ answers only use information printed on the package. Edit freely. */
   faq: [
     {
-      q: 'বাচ্চার নাস্তায় Napi Organic কেন স্বাস্থ্যকর পছন্দ?',
-      a: 'এটি অর্গানিক কলা থেকে তৈরি, এতে কোনো প্রিজারভেটিভ নেই, এবং এটি ভিগান ও গ্লুটেন-ফ্রি — সবই প্যাকেটে উল্লেখিত। সম্পূর্ণ উপাদান তালিকা প্যাকেটের পেছনে ছাপা আছে, লুকানো কিছু নেই। সুষম খাদ্যাভ্যাসের অংশ হিসেবে পরিমিত পরিমাণে উপভোগ করুন।',
+      q: 'শিশুদের জন্য Napi Organic কেন স্বাস্থ্যকর পছন্দ?',
+      a: 'এটি ১০০% অর্গানিক কলা থেকে তৈরি, এতে কোনো প্রিজারভেটিভ নেই, এবং এটি ভিগান ও গ্লুটেন-ফ্রি — সবই প্যাকেটে উল্লেখিত। সম্পূর্ণ উপাদান তালিকা প্যাকেটের পেছনে ছাপা আছে, লুকানো কিছু নেই। সুষম খাদ্যাভ্যাসের অংশ হিসেবে পরিমিত পরিমাণে উপভোগ করুন।',
     },
     {
-      q: 'বাচ্চাদের টিফিনে দেওয়া যাবে?',
-      a: 'হ্যাঁ। এটি অর্গানিক কলা থেকে তৈরি, কোনো প্রিজারভেটিভ নেই, এবং ভিগান ও গ্লুটেন-ফ্রি। জিপ-লক প্যাক থেকে অল্প করে টিফিন বক্সে দিন, বাকিটা আটকে রাখুন। যেকোনো নাস্তার মতোই পরিমিত পরিমাণে দেওয়াই ভালো।',
+      q: 'এটা কি শুধু শিশুদের জন্য?',
+      a: 'না। শিশুদের কথা ভেবে তৈরি হলেও, যেকোনো বয়সের মানুষ যারা বিশুদ্ধ, ভেজালমুক্ত নাস্তা পছন্দ করেন — সবার জন্যই উপযুক্ত। অফিসে, ভ্রমণে বা চায়ের সাথে পরিবারের সবাই উপভোগ করতে পারেন।',
     },
     {
-      q: 'কোন বয়সের বাচ্চাদের জন্য উপযুক্ত?',
+      q: '“ভেজালমুক্ত” বলতে কী বোঝানো হচ্ছে?',
+      a: 'এতে কোনো প্রিজারভেটিভ যোগ করা হয়নি, আর প্রতিটি উপাদান প্যাকেটে স্পষ্টভাবে লেখা আছে — অর্গানিক কলা, নারকেল তেল, লাল চিনি আর পরিচিত মসলা। এর বাইরে কিছু মেশানো হয় না।',
+    },
+    {
+      q: 'কোন বয়সের শিশুদের দেওয়া যাবে?',
       // TODO: confirm the recommended age with your product team.
-      a: 'যেসব বাচ্চা স্বাচ্ছন্দ্যে শক্ত ও মুচমুচে খাবার চিবিয়ে খেতে পারে, তাদের জন্য। খুব ছোট বাচ্চাদের মুচমুচে খাবার দেওয়ার সময় পাশে থেকে নজর রাখুন। খাবারে অ্যালার্জি থাকলে প্যাকেটের উপাদান তালিকা দেখে নিন।',
+      a: 'যেসব শিশু স্বাচ্ছন্দ্যে শক্ত ও মুচমুচে খাবার চিবিয়ে খেতে পারে, তাদের জন্য। খুব ছোট শিশুদের মুচমুচে খাবার দেওয়ার সময় পাশে থেকে নজর রাখুন। খাবারে অ্যালার্জি থাকলে প্যাকেটের উপাদান তালিকা দেখে নিন।',
     },
     {
-      q: 'এটা কি ঝাল? বাচ্চারা খেতে পারবে?',
+      q: 'এটা কি ঝাল? শিশুরা খেতে পারবে?',
       // TODO: describe the actual spice level once confirmed.
-      a: 'এর ফ্লেভার চিলি লাইম গ্লেজড, তাই এতে মসলা আছে। প্রথমবার অল্প দিয়ে দেখে নিন আপনার বাচ্চার কেমন লাগে। প্রশ্ন থাকলে WhatsApp-এ জিজ্ঞেস করুন।',
+      a: 'এর ফ্লেভার চিলি লাইম গ্লেজড, তাই এতে মসলা আছে। প্রথমবার অল্প দিয়ে দেখে নিন আপনার শিশুর কেমন লাগে। প্রশ্ন থাকলে WhatsApp-এ জিজ্ঞেস করুন।',
     },
     {
       q: 'কলাগুলো কি অর্গানিক?',
-      a: 'হ্যাঁ। প্যাকেটের উপাদান তালিকায় মূল উপাদান হিসেবে “Organic Bananas” উল্লেখ আছে।',
+      a: 'হ্যাঁ, ১০০% অর্গানিক কলা। প্যাকেটের উপাদান তালিকায় মূল উপাদান হিসেবে “Organic Bananas” উল্লেখ আছে।',
     },
     {
       q: 'এতে কী কী উপাদান ব্যবহার করা হয়?',

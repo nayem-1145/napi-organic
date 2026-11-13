@@ -48,9 +48,9 @@ const CHAPTERS: Chapter[] = [
   {
     from: 0.75,
     to: 0.885,
-    label: 'টিফিনের সময়',
-    title: 'বাচ্চার টিফিনে, পরিবারের নাস্তায়',
-    body: 'স্কুলের টিফিন বক্সে, বিকেলের নাস্তায় কিংবা ভ্রমণে — নিশ্চিন্তে দিন।',
+    label: 'সব বয়সের জন্য',
+    title: 'শিশুর জন্য নিশ্চিন্ত, সবার জন্য বিশুদ্ধ',
+    body: 'ছোটদের নাস্তায়, বড়দের আড্ডায় — ভেজালমুক্ত স্বাদ পরিবারের সবার জন্য।',
   },
 ];
 const FINAL_FROM = 0.915;
@@ -261,20 +261,20 @@ export function Experience() {
           <div className="max-w-[40rem] pt-24 lg:pt-0">
             <p className="eyebrow mb-5 lg:mb-7">{site.brand.tagline}</p>
             <h1 className="display text-[2.15rem] text-forest sm:text-5xl lg:text-[4.2rem] xl:text-[4.7rem]">
-              বাচ্চার টিফিনে
+              শিশুর জন্য স্বাস্থ্যকর,
               <br />
               <span className="relative inline-block text-forest-deep">
-                <span className="relative z-10">অর্গানিক</span>
+                <span className="relative z-10">১০০% অর্গানিক</span>
                 <span aria-hidden className="absolute inset-x-[-0.12em] bottom-[0.08em] -z-0 h-[0.36em] -rotate-1 rounded-full bg-gradient-to-r from-banana to-amber" />
               </span>{' '}
-              নাস্তা
+              কলার চিপস
             </h1>
-            <p className="mt-5 max-w-[30rem] text-[0.98rem] text-ink-soft sm:text-lg lg:mt-7">
-              অর্গানিক কলা থেকে তৈরি, প্রিজারভেটিভমুক্ত ব্যানানা চিপস। স্কুলের টিফিন বা বিকেলের নাস্তায় — বাবা-মায়ের নিশ্চিন্ত পছন্দ।
+            <p className="mt-5 max-w-[31rem] text-[0.98rem] text-ink-soft sm:text-lg lg:mt-7">
+              প্রিজারভেটিভ নেই, ভেজাল নেই। শিশুদের জন্য নিশ্চিন্ত নাস্তা — আর বিশুদ্ধ খাবার যারা পছন্দ করেন, সেই সব বয়সের মানুষের জন্যও।
             </p>
             {/* claims printed on the package */}
             <ul className="mt-5 hidden flex-wrap gap-2 sm:flex lg:mt-6" aria-label="প্যাকেটে উল্লেখিত বৈশিষ্ট্য">
-              {['অর্গানিক কলা', 'প্রিজারভেটিভ নেই', 'ভিগান ও গ্লুটেন-ফ্রি', 'টিফিন-বান্ধব জিপ-লক'].map((c) => (
+              {[site.claims.organic, 'ভেজালমুক্ত', 'প্রিজারভেটিভ নেই', 'ভিগান ও গ্লুটেন-ফ্রি'].map((c) => (
                 <li key={c} className="glass inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[0.8rem] font-semibold text-forest">
                   <Check size={14} strokeWidth={3} className="text-amber-deep" aria-hidden />
                   {c}
@@ -284,13 +284,13 @@ export function Experience() {
             <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 lg:mt-9">
               <OrderButton className="max-sm:w-full" />
               <button onClick={() => scrollToId('kids')} className="btn btn-ghost max-sm:hidden">
-                বাচ্চাদের জন্য কেন?
+                শিশুদের জন্য কেন?
                 <span className="line" />
               </button>
             </div>
             <dl className="mt-12 hidden gap-10 text-sm lg:flex">
               {[
-                ['মূল উপাদান', 'অর্গানিক কলা'],
+                ['মূল উপাদান', site.claims.organic],
                 ['পদ্ধতি', 'ভ্যাকুয়াম ড্রায়েড'],
                 ['নেট ওজন', `${toBnDigits(site.product.weightGrams)} গ্রাম`],
               ].map(([k, v]) => (
@@ -340,7 +340,7 @@ export function Experience() {
               className="invisible absolute inset-x-0 top-0 z-20 px-5 pt-24 opacity-0 sm:px-8 lg:top-1/2 lg:right-auto stage-col lg:max-w-[30rem] lg:-translate-y-1/2 lg:px-0 lg:pt-0"
             >
               <p className="eyebrow mb-4">{toBnDigits('05')} — ভালো থাকার শুরু</p>
-              <h2 className="display text-[2.1rem] text-forest lg:text-[3.6rem]">বাচ্চার টিফিনে প্রকৃতির উপাদান।</h2>
+              <h2 className="display text-[2.1rem] text-forest lg:text-[3.6rem]">শিশুর জন্য স্বাস্থ্যকর, সবার জন্য বিশুদ্ধ।</h2>
               <div className="mt-6 lg:mt-8">
                 <OrderButton />
               </div>
@@ -371,7 +371,7 @@ function StaticStory() {
           loading="lazy"
         />
         <div>
-          <h2 className="display text-[2.1rem] text-forest lg:text-[3.4rem]">প্রকৃতির উপাদানে, ভালো থাকার অভ্যাস।</h2>
+          <h2 className="display text-[2.1rem] text-forest lg:text-[3.4rem]">শিশুর জন্য স্বাস্থ্যকর, সবার জন্য বিশুদ্ধ।</h2>
           <div className="mt-8">
             <OrderButton />
           </div>

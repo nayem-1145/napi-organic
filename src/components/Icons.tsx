@@ -29,6 +29,7 @@ export {
   Droplets,
   Flame,
   Wind,
+  ShieldCheck,
 } from 'lucide-react';
 
 type P = { size?: number; className?: string };

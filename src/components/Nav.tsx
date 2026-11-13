@@ -4,7 +4,7 @@ import { goToOrder, LogoTab } from './Brand';
 import { Menu, ShoppingCart, X } from './Icons';
 
 export const NAV_LINKS = [
-  { id: 'kids', label: 'বাচ্চাদের জন্য' },
+  { id: 'kids', label: 'শিশুদের জন্য' },
   { id: 'why', label: 'কেন Napi' },
   { id: 'product', label: 'প্যাকেজ' },
   { id: 'ingredients', label: 'উপাদান' },
