@@ -17,7 +17,7 @@ function PouchStack({ packs }: { packs: number }) {
       {offsets.map((o, i) => (
         <img
           key={i}
-          src={asset('images/pouch-front.webp')}
+          src={asset('images/pouch-front-v2.webp')}
           alt=""
           className="pouch-fan"
           style={{ '--o': o, zIndex: o === 0 ? 3 : i, clipPath: 'inset(0 round 6% 6% 8% 8%)' } as CSSProperties}
@@ -67,7 +67,7 @@ function BundleCard({ b }: { b: ProductBundle }) {
       >
         <PouchStack packs={b.packs} />
         <span
-          className={`absolute top-3 right-3 grid h-11 min-w-11 place-items-center rounded-full px-2 text-sm font-bold ${
+          className={`absolute top-3 right-3 z-10 grid h-11 min-w-11 place-items-center rounded-full px-2 text-sm font-bold ${
             f ? 'bg-forest-deep text-banana' : 'bg-white text-forest shadow-sm'
           }`}
         >

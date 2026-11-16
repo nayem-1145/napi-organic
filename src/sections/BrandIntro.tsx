@@ -27,7 +27,7 @@ export function BrandIntro() {
         <div className="mt-16 grid gap-6 lg:mt-24 lg:grid-cols-12 lg:gap-10">
           <figure className="lg:col-span-8" data-reveal>
             <Photo
-              src={asset('images/product-photo.webp')}
+              src={asset('images/product-photo-v2.webp')}
               alt="Napi Organic ব্যানানা চিপসের প্যাকেটের সামনে ও পেছনের দিক, পাশে পাকা কলা ও চিপস"
               brief=""
               className="aspect-[16/10] w-full lg:aspect-[16/9]"
@@ -40,7 +40,7 @@ export function BrandIntro() {
           </figure>
           <div className="flex flex-col justify-between gap-10 lg:col-span-4">
             <Photo
-              src={asset('images/chips-pile.webp')}
+              src={asset('images/chips-bowl.webp')}
               alt="সোনালি মুচমুচে ব্যানানা চিপস"
               brief=""
               className="aspect-[5/2] w-full"

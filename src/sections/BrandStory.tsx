@@ -7,7 +7,7 @@ const STEPS = [
     title: 'সবুজ বাগান থেকে',
     text: 'গল্পের শুরু কলাবাগানে — যেখানে রোদ, মাটি আর সময় মিলে বেড়ে ওঠে অর্গানিক কলা।',
     img: () => site.images.plantation,
-    brief: 'কলাবাগান, ভোরের নরম আলো, সারি সারি গাছ (প্রশস্ত ফ্রেম)',
+    brief: 'কলাগাছে ঝুলে থাকা কলার কাঁদি',
     tone: 'green' as const,
   },
   {
@@ -27,7 +27,7 @@ const STEPS = [
   {
     title: 'আপনার হাতে',
     text: 'রিসাইকেলযোগ্য জিপ-লক প্যাকে স্বাস্থ্যকর নাস্তা — যখন খুশি খুলুন, আবার আটকে রাখুন।',
-    img: () => 'images/product-photo.webp',
+    img: () => 'images/product-photo-v2.webp',
     brief: '',
     tone: 'cream' as const,
   },
@@ -50,10 +50,10 @@ export function BrandStory() {
                       const p = s.img();
                       return p && !p.startsWith('http') && !p.startsWith('data:') ? asset(p) : p;
                     })()}
-                    alt={s.title}
+                    alt={i === 0 ? 'বাংলাদেশের কলাগাছে ঝুলে থাকা কাঁচা কলার কাঁদি' : s.title}
                     brief={s.brief}
                     tone={s.tone}
-                    className={`w-full ${i === 0 ? 'aspect-[16/10]' : 'aspect-[4/3]'}`}
+                    className="w-full aspect-[4/3]"
                     imgClassName={i === 3 ? 'object-[30%_50%]' : ''}
                   />
                 </div>

@@ -56,7 +56,7 @@ export function StickyOrderBar() {
       aria-hidden={!show}
     >
       <div className="glass mx-auto flex max-w-xl items-center gap-3 rounded-[1.4rem] p-2 pl-3">
-        <img src={asset('images/pouch-front.webp')} alt="" className="h-12 w-auto shrink-0 drop-shadow-md" loading="lazy" />
+        <img src={asset('images/pouch-front-v2.webp')} alt="" className="h-12 w-auto shrink-0 drop-shadow-md" loading="lazy" />
         <div className="min-w-0 flex-1 leading-tight">
           <p className="truncate text-sm font-semibold text-forest">অর্গানিক ব্যানানা চিপস</p>
           <p className="truncate text-xs text-ink-soft">

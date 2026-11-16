@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
+/* desktop-width but short screens (most laptops: 1366×657, 1280×720, 1536×730…) */
+@custom-variant short (@media (min-width: 64rem) and (max-height: 800px));
+
 @theme {
   /* Brand palette — tropical, vibrant, anchored by deep forest green */
   --color-forest: #1b4d3e;

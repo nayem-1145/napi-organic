@@ -43,7 +43,7 @@ export function Lifestyle() {
             <img src={shot} alt="" className="absolute inset-0 h-full w-full object-cover object-[75%_50%] max-lg:object-[60%_50%]" />
           ) : (
             <img
-              src={asset('images/chips-pile.webp')}
+              src={asset('images/chips-bowl.webp')}
               alt=""
               className="absolute right-[4%] bottom-[18%] w-[min(70vw,780px)] [mask-image:radial-gradient(closest-side,#000_62%,transparent)]"
               data-parallax

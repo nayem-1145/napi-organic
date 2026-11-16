@@ -25,7 +25,8 @@ import {
 
 export interface EngineOptions {
   container: HTMLElement;
-  textures: { front: string; back: string };
+  /** `chip` (optional): square photo of a single chip used on every falling chip */
+  textures: { front: string; back: string; chip?: string };
   reducedMotion: boolean;
   onReady?: () => void;
 }
@@ -120,16 +121,20 @@ export class NapiExperience {
   async init(): Promise<void> {
     const loader = new THREE.TextureLoader();
     const maxAniso = Math.min(8, this.renderer.capabilities.getMaxAnisotropy());
-    const [front, back] = await Promise.all([
+    const chipUrl = this.opts.textures.chip;
+    const [front, back, chip] = await Promise.all([
       loader.loadAsync(this.opts.textures.front),
       loader.loadAsync(this.opts.textures.back),
+      // a missing chip photo is not fatal — the procedural texture takes over
+      chipUrl ? loader.loadAsync(chipUrl).catch(() => undefined) : Promise.resolve(undefined),
     ]);
     if (this.disposed) {
       front.dispose();
       back.dispose();
+      chip?.dispose();
       return;
     }
-    for (const t of [front, back]) {
+    for (const t of chip ? [front, back, chip] : [front, back]) {
       t.colorSpace = THREE.SRGBColorSpace;
       t.anisotropy = maxAniso;
       this.textures.push(t);
@@ -183,7 +188,7 @@ export class NapiExperience {
     this.scene.add(this.bowl.object);
 
     const mobile = this.layout === 'mobile';
-    this.chips = new ChipSystem(mobile ? 64 : 150, mobile ? 0.185 : 0.15, BEATS.pour, FALL);
+    this.chips = new ChipSystem(mobile ? 64 : 150, mobile ? 0.185 : 0.15, BEATS.pour, FALL, chip);
     this.scene.add(this.chips.object);
 
     this.computePourFrame();
@@ -268,7 +273,9 @@ export class NapiExperience {
     this.chips.update({
       s,
       fallDuration: FALL,
-      stageVisible: seg(s, ...BEATS.open) > 0.15,
+      // only once the mouth is (almost) fully open is the bag deep enough to hold the
+      // staged chips — earlier they poke through the thin film near the top
+      stageVisible: seg(s, ...BEATS.open) > 0.85,
       pouchMatrix: pouch.matrixWorld,
       mouthWorld: this.mouthWorld,
       exitDir: this.exitDir,

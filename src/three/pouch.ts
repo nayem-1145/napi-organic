@@ -33,7 +33,8 @@ export interface PackageModel {
 }
 
 export const POUCH = {
-  width: 1.3,
+  // matches the artwork's aspect ratio (pouch-front-v2.jpg is 640×905 ≈ 0.707)
+  width: 1.59,
   height: 2.25,
   depth: 0.34, // half-thickness of the base gusset
 };
@@ -154,7 +155,8 @@ export class ProceduralPouch implements PackageModel {
       side: THREE.BackSide,
     });
     const gussetMat = new THREE.MeshPhysicalMaterial({
-      color: 0x0b6a2a,
+      color: 0x2f7a22, // sampled from the pouch film
+
       roughness: 0.45,
       clearcoat: 0.4,
       side: THREE.DoubleSide,

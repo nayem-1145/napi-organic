@@ -103,7 +103,11 @@ export function Experience() {
         if (cancelled || !stageRef.current) return;
         const engine = new NapiExperience({
           container: stageRef.current,
-          textures: { front: asset('textures/pouch-front.jpg'), back: asset('textures/pouch-back.jpg') },
+          textures: {
+            front: asset('textures/pouch-front-v2.jpg'),
+            back: asset('textures/pouch-back-v2.jpg'),
+            chip: asset('textures/chip.jpg'),
+          },
           reducedMotion: reduced,
           onReady: () => {
             if (cancelled) return;
@@ -243,7 +247,7 @@ export function Experience() {
           } bottom-[9%] left-1/2 h-[36svh] -translate-x-1/2 lg:top-1/2 lg:bottom-auto lg:left-[66%] lg:h-[58vh] lg:-translate-y-1/2`}
         >
           <img
-            src={asset('images/pouch-front.webp')}
+            src={asset('images/pouch-front-v2.webp')}
             alt="Napi Organic Crispy Banana Chips প্যাকেট"
             className={`h-full w-auto drop-shadow-[0_40px_40px_rgb(36_75_53/0.28)] ${reduced ? '' : 'animate-float-soft'}`}
             style={{ clipPath: 'inset(0 round 4% 4% 6% 6%)' }}
@@ -257,10 +261,11 @@ export function Experience() {
         </div>
 
         {/* HERO COPY */}
-        <div ref={heroRef} className="relative z-10 mx-auto flex h-full max-w-[1440px] px-5 sm:px-8 lg:items-center lg:px-12">
-          <div className="max-w-[40rem] pt-24 lg:pt-0">
-            <p className="eyebrow mb-5 lg:mb-7">{site.brand.tagline}</p>
-            <h1 className="display text-[2.15rem] text-forest sm:text-5xl lg:text-[4.2rem] xl:text-[4.7rem]">
+        {/* lg:pt-20 = fixed header height, so the copy is centred in the space BELOW the header */}
+        <div ref={heroRef} className="relative z-10 mx-auto flex h-full max-w-[1440px] px-5 sm:px-8 lg:items-center lg:px-12 lg:pt-20 lg:pb-8">
+          <div className="max-w-[40rem] pt-24 lg:max-w-[min(54rem,54vw)] lg:pt-0">
+            <p className="eyebrow mb-5 lg:mb-7 short:mb-4">{site.brand.tagline}</p>
+            <h1 className="display text-[2.15rem] text-forest sm:text-5xl lg:text-[clamp(2.5rem,min(4.2vw,7.4vh),4.4rem)]">
               শিশুর জন্য স্বাস্থ্যকর,
               <br />
               <span className="relative inline-block text-forest-deep">
@@ -269,11 +274,11 @@ export function Experience() {
               </span>{' '}
               কলার চিপস
             </h1>
-            <p className="mt-5 max-w-[31rem] text-[0.98rem] text-ink-soft sm:text-lg lg:mt-7">
+            <p className="mt-5 max-w-[31rem] text-[0.98rem] text-ink-soft sm:text-lg lg:mt-7 short:mt-4 short:text-base">
               প্রিজারভেটিভ নেই, ভেজাল নেই। শিশুদের জন্য নিশ্চিন্ত নাস্তা — আর বিশুদ্ধ খাবার যারা পছন্দ করেন, সেই সব বয়সের মানুষের জন্যও।
             </p>
             {/* claims printed on the package */}
-            <ul className="mt-5 hidden flex-wrap gap-2 sm:flex lg:mt-6" aria-label="প্যাকেটে উল্লেখিত বৈশিষ্ট্য">
+            <ul className="mt-5 hidden flex-wrap gap-2 sm:flex lg:mt-6 short:mt-4" aria-label="প্যাকেটে উল্লেখিত বৈশিষ্ট্য">
               {[site.claims.organic, 'ভেজালমুক্ত', 'প্রিজারভেটিভ নেই', 'ভিগান ও গ্লুটেন-ফ্রি'].map((c) => (
                 <li key={c} className="glass inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[0.8rem] font-semibold text-forest">
                   <Check size={14} strokeWidth={3} className="text-amber-deep" aria-hidden />
@@ -281,14 +286,14 @@ export function Experience() {
                 </li>
               ))}
             </ul>
-            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 lg:mt-9">
+            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 lg:mt-9 short:mt-6">
               <OrderButton className="max-sm:w-full" />
               <button onClick={() => scrollToId('kids')} className="btn btn-ghost max-sm:hidden">
                 শিশুদের জন্য কেন?
                 <span className="line" />
               </button>
             </div>
-            <dl className="mt-12 hidden gap-10 text-sm lg:flex">
+            <dl className="mt-12 hidden gap-10 text-sm lg:flex short:mt-7 [@media(min-width:64rem)_and_(max-height:620px)]:hidden">
               {[
                 ['মূল উপাদান', site.claims.organic],
                 ['পদ্ধতি', 'ভ্যাকুয়াম ড্রায়েড'],
@@ -365,7 +370,7 @@ function StaticStory() {
     <section className="bg-cream-deep/60 py-20 lg:py-28">
       <div className="mx-auto grid max-w-[1440px] items-center gap-10 px-5 sm:px-8 lg:grid-cols-2 lg:px-12">
         <img
-          src={asset('images/product-photo.webp')}
+          src={asset('images/product-photo-v2.webp')}
           alt="Napi Organic ব্যানানা চিপসের প্যাকেট, কলা ও চিপস"
           className="w-full object-cover"
           loading="lazy"

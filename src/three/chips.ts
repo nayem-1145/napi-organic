@@ -174,6 +174,7 @@ export class ChipSystem {
   private readonly geos: THREE.BufferGeometry[] = [];
   private readonly material: THREE.MeshStandardMaterial;
   private readonly plans: ChipPlan[] = [];
+  private readonly photo: boolean;
   // scratch
   private readonly m = new THREE.Matrix4();
   private readonly p = new THREE.Vector3();
@@ -183,16 +184,30 @@ export class ChipSystem {
   private readonly v1 = new THREE.Vector3();
   private readonly zero = new THREE.Vector3(0, 0, 0);
 
-  constructor(count: number, chipRadius: number, pourWindow: readonly [number, number], fallDuration: number) {
+  private readonly ownsTexture: boolean;
+
+  /**
+   * @param photo optional real chip photo (square, chip filling the frame). Falls back to
+   *              the procedural texture when absent.
+   */
+  constructor(
+    count: number,
+    chipRadius: number,
+    pourWindow: readonly [number, number],
+    fallDuration: number,
+    photo?: THREE.Texture,
+  ) {
     this.count = count;
-    const tex = chipTexture();
+    this.ownsTexture = !photo;
+    const tex = photo ?? chipTexture();
     this.material = new THREE.MeshStandardMaterial({
       map: tex,
       bumpMap: tex,
-      bumpScale: 1.2,
-      roughness: 0.58,
+      bumpScale: photo ? 0.6 : 1.2,
+      roughness: 0.62,
       metalness: 0,
     });
+    this.photo = !!photo;
     const perVariant = Math.ceil(count / VARIANTS);
     for (let v = 0; v < VARIANTS; v++) {
       const geo = chipGeometry(v + 1, chipRadius, chipRadius * 0.2);
@@ -255,9 +270,15 @@ export class ChipSystem {
           bounce: R * (0.35 + rand() * 0.6),
         };
         this.plans.push(plan);
-        // golden variation: some paler, some more caramelised
+        // golden variation: some paler, some more caramelised. A real photo already
+        // carries its colour, so it only gets a gentle ±6% brightness shift.
         const tone = rand();
-        color.setRGB(0.92 + tone * 0.12, 0.84 + tone * 0.14, 0.72 + tone * 0.22);
+        if (this.photo) {
+          const b = 0.94 + tone * 0.12;
+          color.setRGB(b, b * (0.98 + tone * 0.02), b * (0.95 + tone * 0.05));
+        } else {
+          color.setRGB(0.92 + tone * 0.12, 0.84 + tone * 0.14, 0.72 + tone * 0.22);
+        }
         this.meshes[variant].setColorAt(plan.slot, color);
       }
       placed += inLayer;
@@ -340,7 +361,8 @@ export class ChipSystem {
   dispose() {
     for (const g of this.geos) g.dispose();
     for (const mesh of this.meshes) mesh.dispose();
-    this.material.map?.dispose();
+    // a loaded photo texture belongs to the engine, which disposes it
+    if (this.ownsTexture) this.material.map?.dispose();
     this.material.dispose();
   }
 }

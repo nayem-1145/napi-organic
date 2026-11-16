@@ -157,8 +157,8 @@ export const site = {
    * placeholder is shown. Drop files into /public/images and set the paths.
    */
   images: {
-    plantation: 'images/plantation-bd.webp' as string | null, // aerial banana plantation, Bangladesh
-    preparation: 'images/chips-pile.webp' as string | null, // our own product photo
+    plantation: 'images/banana-tree-bd.webp' as string | null, // banana bunch hanging on the tree, Bangladesh
+    preparation: 'images/chips-bowl.webp' as string | null, // our own product photo
     lifestyle: 'images/kids-village.webp' as string | null, // full-width: children playing in a Bangladeshi haor village
     ingredients: null as string | null, // optional flat-lay of all ingredients
     /** Kids section — replace with your own shoot (children with the product, parental consent) when available */
@@ -171,11 +171,11 @@ export const site = {
    */
   photoCredits: [
     {
-      file: 'plantation-bd.webp',
-      title: 'Aerial view of a banana plantation in Bangladesh',
-      author: 'The Roving Rokibul',
+      file: 'banana-tree-bd.webp',
+      title: 'Bananas of Bangladesh 01 (cropped)',
+      author: 'কামরুল ইসলাম শাহীন',
       license: 'CC BY-SA 4.0',
-      url: 'https://commons.wikimedia.org/wiki/File:Aerial_view_of_a_banana_plantation_in_Bangladesh.jpg',
+      url: 'https://commons.wikimedia.org/wiki/File:Bananas_of_Bangladesh_01.jpg',
     },
     {
       file: 'kids-village.webp',

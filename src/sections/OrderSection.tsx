@@ -145,7 +145,7 @@ export function OrderSection() {
           </ul>
 
           <img
-            src={shot ?? asset('images/product-photo.webp')}
+            src={shot ?? asset('images/product-photo-v2.webp')}
             alt="Napi Organic ব্যানানা চিপসের প্যাকেট"
             className={`mt-8 hidden w-full max-w-md lg:block ${shot ? 'scale-125 object-contain' : 'rounded-[1.75rem] object-cover mix-blend-multiply'}`}
             loading="lazy"
