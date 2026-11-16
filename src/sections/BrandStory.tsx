@@ -13,7 +13,7 @@ const STEPS = [
   {
     title: 'বাছাই করা অর্গানিক কলা',
     text: 'মূল উপাদান অর্গানিক কলা — দেখে-শুনে বাছাই করা, যাতে প্রতিটি প্যাকেটে থাকে একই মান।',
-    img: () => 'images/bananas.webp',
+    img: () => 'images/bananas-bunch.webp',
     brief: '',
     tone: 'warm' as const,
   },
@@ -42,22 +42,31 @@ export function BrandStory() {
         <div className="mt-16 space-y-20 lg:mt-28 lg:space-y-36">
           {STEPS.map((s, i) => {
             const flip = i % 2 === 1;
+            // step 1 uses a portrait photo → narrower column + 4:5 frame so it isn't blown up
+            const tall = i === 0;
             return (
               <article key={s.title} className="grid items-center gap-8 lg:grid-cols-12 lg:gap-10">
-                <div className={`lg:col-span-7 ${flip ? 'lg:order-2 lg:col-start-6' : ''}`} data-reveal>
+                <div
+                  className={
+                    tall
+                      ? 'mx-auto w-full max-w-md lg:col-span-5 lg:col-start-2 lg:max-w-none'
+                      : `lg:col-span-7 ${flip ? 'lg:order-2 lg:col-start-6' : ''}`
+                  }
+                  data-reveal
+                >
                   <Photo
                     src={(() => {
                       const p = s.img();
                       return p && !p.startsWith('http') && !p.startsWith('data:') ? asset(p) : p;
                     })()}
-                    alt={i === 0 ? 'বাংলাদেশের কলাগাছে ঝুলে থাকা কাঁচা কলার কাঁদি' : s.title}
+                    alt={tall ? 'কলাবাগানে গাছে ঝুলে থাকা কাঁচা কলার কাঁদি' : s.title}
                     brief={s.brief}
                     tone={s.tone}
-                    className="w-full aspect-[4/3]"
+                    className={`w-full ${tall ? 'aspect-[4/5]' : 'aspect-[4/3]'}`}
                     imgClassName={i === 3 ? 'object-[30%_50%]' : ''}
                   />
                 </div>
-                <div className={`lg:col-span-4 ${flip ? 'lg:order-1 lg:col-start-1' : 'lg:col-start-9'}`} data-reveal>
+                <div className={`lg:col-span-4 ${flip ? 'lg:order-1 lg:col-start-1' : tall ? 'lg:col-start-8' : 'lg:col-start-9'}`} data-reveal>
                   <span className="font-display text-6xl text-banana lg:text-7xl">{toBnDigits(`0${i + 1}`)}</span>
                   <h3 className="display mt-4 text-3xl text-forest lg:text-4xl">{s.title}</h3>
                   <p className="mt-4 text-lg text-ink-soft">{s.text}</p>

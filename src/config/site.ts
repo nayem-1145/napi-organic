@@ -157,7 +157,7 @@ export const site = {
    * placeholder is shown. Drop files into /public/images and set the paths.
    */
   images: {
-    plantation: 'images/banana-tree-bd.webp' as string | null, // banana bunch hanging on the tree, Bangladesh
+    plantation: 'images/banana-garden.webp' as string | null, // own photo: banana bunches hanging in the garden
     preparation: 'images/chips-bowl.webp' as string | null, // our own product photo
     lifestyle: 'images/kids-village.webp' as string | null, // full-width: children playing in a Bangladeshi haor village
     ingredients: null as string | null, // optional flat-lay of all ingredients
@@ -170,13 +170,6 @@ export const site = {
    * which the footer shows. Remove an entry only when you replace that photo.
    */
   photoCredits: [
-    {
-      file: 'banana-tree-bd.webp',
-      title: 'Bananas of Bangladesh 01 (cropped)',
-      author: 'কামরুল ইসলাম শাহীন',
-      license: 'CC BY-SA 4.0',
-      url: 'https://commons.wikimedia.org/wiki/File:Bananas_of_Bangladesh_01.jpg',
-    },
     {
       file: 'kids-village.webp',
       title: 'Childhood Memories',
