@@ -8,8 +8,7 @@ export const NAV_LINKS = [
   { id: 'why', label: 'কেন Napi' },
   { id: 'product', label: 'প্যাকেজ' },
   { id: 'ingredients', label: 'উপাদান' },
-  { id: 'reviews', label: 'মতামত' },
-  { id: 'faq', label: 'প্রশ্নোত্তর' },
+  // { id: 'reviews', label: 'মতামত' }, // hidden with the Reviews section
 ];
 
 export function Nav() {

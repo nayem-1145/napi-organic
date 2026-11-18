@@ -213,7 +213,7 @@ export function OrderSection() {
                       <span className="flex-1">
                         <span className="block font-semibold">{b.name}</span>
                         <span className={`text-sm ${on ? 'text-cream/75' : 'text-ink-soft'}`}>
-                          {toBnDigits(b.packs)} প্যাক{p !== null ? ` · ${formatBdt(p)}` : ''}
+                          {toBnDigits(b.packs)} প্যাকেট{p !== null ? ` · ${formatBdt(p)}` : ''}
                         </span>
                       </span>
                     </label>
@@ -372,7 +372,9 @@ export function OrderSection() {
                   <p className="display text-2xl leading-tight text-forest">{total !== null ? formatBdt(total) : '—'}</p>
                 </div>
               </div>
-              {total === null && <p className="mt-2 text-sm text-ink-soft">মূল্য ও ডেলিভারি চার্জ কনফার্মেশন কলে জানিয়ে দেওয়া হবে।</p>}
+              <p className="mt-2 text-sm text-ink-soft">
+                {total === null ? 'মূল্য ও ডেলিভারি চার্জ কনফার্মেশন কলে জানিয়ে দেওয়া হবে।' : 'ডেলিভারি চার্জ (যদি থাকে) কনফার্মেশন কলে জানিয়ে দেওয়া হবে।'}
+              </p>
             </div>
 
             {status === 'error' && (

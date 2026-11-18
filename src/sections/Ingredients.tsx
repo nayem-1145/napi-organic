@@ -132,7 +132,7 @@ export function Ingredients() {
             <p className="eyebrow eyebrow-light">উপাদান ও উপকারিতা</p>
             <h2 className="display mt-5 text-[2rem] sm:text-[2.6rem]">যা খাচ্ছেন, তা জানুন</h2>
             <p className="mt-4 text-cream/75">
-              অর্গানিক কলা আর পরিচিত, সহজ উপাদান — কোনো প্রিজারভেটিভ নয়। নিচের তালিকা হুবহু প্যাকেটের পেছন থেকে নেওয়া।
+              অর্গানিক কলা আর পরিচিত, সহজ উপাদান — কোনো প্রিজারভেটিভ নয়।
             </p>
 
             <ul className="mt-7 grid grid-cols-2 gap-2.5">

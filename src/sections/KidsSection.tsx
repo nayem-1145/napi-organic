@@ -37,13 +37,13 @@ export function KidsSection() {
               {photo ? (
                 <img
                   src={asset(photo)}
-                  alt="বাংলাদেশের গ্রামে কলাগাছ আর ধানক্ষেতের পাশে খেলায় মেতে থাকা শিশুরা"
-                  className="relative aspect-[4/3] w-full rounded-[2rem] object-cover lg:aspect-[5/6]"
+                  alt="ঘরে মাদুরে বসে Napi Organic কলার চিপস খাচ্ছে একটি ছোট্ট শিশু"
+                  className="relative aspect-[3/4] w-full rounded-[2rem] object-cover object-[50%_60%]"
                   loading="lazy"
                   decoding="async"
                 />
               ) : (
-                <div className="relative grid aspect-[4/3] w-full place-items-center rounded-[2rem] bg-white p-8 lg:aspect-[5/6]">
+                <div className="relative grid aspect-[3/4] w-full place-items-center rounded-[2rem] bg-white p-8">
                   <Sprout size={96} strokeWidth={1.2} className="text-leaf" aria-hidden />
                 </div>
               )}

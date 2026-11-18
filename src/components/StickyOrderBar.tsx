@@ -44,9 +44,9 @@ export function StickyOrderBar() {
     return () => mq.removeEventListener('change', sync);
   }, [show]);
 
-  // lowest per-pack price across all bundles ("৳X থেকে")
-  const perPack = site.bundles.map((b) => bundlePrice(b).perPack).filter((p): p is number => p !== null);
-  const fromPrice = perPack.length ? Math.min(...perPack) : null;
+  // cheapest package you can actually order ("৳X থেকে")
+  const prices = site.bundles.map((b) => bundlePrice(b).price).filter((p): p is number => p !== null);
+  const fromPrice = prices.length ? Math.min(...prices) : null;
 
   return (
     <div
@@ -61,7 +61,7 @@ export function StickyOrderBar() {
           <p className="truncate text-sm font-semibold text-forest">অর্গানিক ব্যানানা চিপস</p>
           <p className="truncate text-xs text-ink-soft">
             {fromPrice !== null ? `${formatBdt(fromPrice)} থেকে · ` : 'ভেজালমুক্ত · '}
-            {toBnDigits(site.product.weightGrams)} গ্রাম
+            {toBnDigits(site.product.weightGrams)} গ্রাম প্যাকেট
           </p>
         </div>
         <button

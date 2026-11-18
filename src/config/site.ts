@@ -25,7 +25,7 @@ export interface ProductBundle {
   name: string;
   /** Short line under the name, e.g. who it is for */
   tagline: string;
-  /** Number of 150 g packs in the bundle */
+  /** Number of packets in the bundle (each packet = product.weightGrams) */
   packs: number;
   /**
    * Bundle price in BDT. `null` = packs × `product.priceBdt` (no discount).
@@ -46,11 +46,6 @@ export interface Testimonial {
   text: string;
   /** 1–5 stars. Only use the rating the customer actually gave. */
   rating: number;
-}
-
-export interface FaqItem {
-  q: string;
-  a: string;
 }
 
 export const site = {
@@ -74,45 +69,45 @@ export const site = {
   },
 
   product: {
-    id: 'banana-chips-chili-lime-150',
+    id: 'banana-chips-chili-lime-100',
     name: 'Napi Organic Banana Chips',
     flavour: 'চিলি লাইম গ্লেজড',
-    weightGrams: 150,
-    priceBdt: null, // TODO: set the real price, e.g. 250
+    weightGrams: 100,
+    priceBdt: 100, // per packet (BDT)
     maxQuantity: 20,
   } as ProductVariant,
 
   /**
    * Package options shown in the "প্যাকেজ বেছে নিন" section.
-   * TODO: set real prices. While `product.priceBdt` and these are `null`,
-   * the cards show "মূল্য জানতে যোগাযোগ করুন" instead of a number.
+   * Prices in BDT. Regular price = packets × product.priceBdt (১০০ টাকা);
+   * a lower bundle price automatically shows the "সাশ্রয়" badge.
    */
   bundles: [
     {
       id: 'single',
       name: 'সিঙ্গেল প্যাক',
       tagline: 'প্রথমবার চেখে দেখুন',
-      packs: 1,
-      priceBdt: null,
-      perks: ['১টি ১৫০ গ্রাম জিপ-লক প্যাক', 'শিশু বা নিজের জন্য — চেখে দেখার জন্য আদর্শ'],
+      packs: 4,
+      priceBdt: 400, // 4 × ১০০ টাকা
+      perks: ['৪টি ১০০ গ্রাম জিপ-লক প্যাকেট', 'শিশু বা নিজের জন্য — চেখে দেখার জন্য আদর্শ'],
     },
     {
       id: 'family',
       name: 'ফ্যামিলি প্যাক',
       tagline: 'শিশু থেকে বড় — পরিবারের সবার জন্য',
-      packs: 3,
-      priceBdt: null, // TODO e.g. 3 × price minus a discount
+      packs: 6,
+      priceBdt: 580,
       featured: true,
       ribbon: 'প্রস্তাবিত',
-      perks: ['৩টি ১৫০ গ্রাম জিপ-লক প্যাক', 'শিশুদের নাস্তা আর বড়দের আড্ডায়', 'খোলার পর জিপ আটকে রাখা যায়'],
+      perks: ['৬টি ১০০ গ্রাম জিপ-লক প্যাকেট', 'শিশুদের নাস্তা আর বড়দের আড্ডায়', 'খোলার পর জিপ আটকে রাখা যায়'],
     },
     {
       id: 'value',
-      name: 'ভ্যালু বান্ডেল',
+      name: 'বান্ডেল প্যাক',
       tagline: 'বড় পরিবার বা উপহারের জন্য',
-      packs: 5,
-      priceBdt: null, // TODO
-      perks: ['৫টি ১৫০ গ্রাম জিপ-লক প্যাক', 'যৌথ পরিবার বা প্রিয়জনকে উপহার', 'বারবার অর্ডারের ঝামেলা নেই'],
+      packs: 9,
+      priceBdt: 780,
+      perks: ['৯টি ১০০ গ্রাম জিপ-লক প্যাকেট', 'সবচেয়ে কম দামে প্রতি প্যাকেট', 'যৌথ পরিবার বা প্রিয়জনকে উপহার'],
     },
   ] as ProductBundle[],
 
@@ -159,32 +154,17 @@ export const site = {
   images: {
     plantation: 'images/banana-garden.webp' as string | null, // own photo: banana bunches hanging in the garden
     preparation: 'images/chips-bowl.webp' as string | null, // our own product photo
-    lifestyle: 'images/kids-village.webp' as string | null, // full-width: children playing in a Bangladeshi haor village
     ingredients: null as string | null, // optional flat-lay of all ingredients
-    /** Kids section — replace with your own shoot (children with the product, parental consent) when available */
-    kids: 'images/village-football.webp' as string | null,
+    /** Kids section — own photo of a child with the product */
+    kids: 'images/kid-snack.webp' as string | null,
   },
 
   /**
    * Stock photos from Wikimedia Commons. Their licences REQUIRE this credit,
    * which the footer shows. Remove an entry only when you replace that photo.
    */
-  photoCredits: [
-    {
-      file: 'kids-village.webp',
-      title: 'Childhood Memories',
-      author: 'Ashef Emran',
-      license: 'CC BY-SA 4.0',
-      url: 'https://commons.wikimedia.org/wiki/File:Childhood_Memories.jpg',
-    },
-    {
-      file: 'village-football.webp',
-      title: 'Football in the village of Bangladesh',
-      author: 'Goutam',
-      license: 'CC BY-SA 3.0',
-      url: 'https://commons.wikimedia.org/wiki/File:Football_in_the_village_of_Bangladesh.jpg',
-    },
-  ],
+  photoCredits: [] as { file: string; title: string; author: string; license: string; url: string }[],
+
   /** Shows small "placeholder" notes next to illustrated/placeholder visuals. Turn off for launch. */
   showPlaceholderNotes: true as boolean,
 
@@ -215,56 +195,6 @@ export const site = {
     },
   ] as Testimonial[],
 
-  /** FAQ answers only use information printed on the package. Edit freely. */
-  faq: [
-    {
-      q: 'শিশুদের জন্য Napi Organic কেন স্বাস্থ্যকর পছন্দ?',
-      a: 'এটি ১০০% অর্গানিক কলা থেকে তৈরি, এতে কোনো প্রিজারভেটিভ নেই, এবং এটি ভিগান ও গ্লুটেন-ফ্রি — সবই প্যাকেটে উল্লেখিত। সম্পূর্ণ উপাদান তালিকা প্যাকেটের পেছনে ছাপা আছে, লুকানো কিছু নেই। সুষম খাদ্যাভ্যাসের অংশ হিসেবে পরিমিত পরিমাণে উপভোগ করুন।',
-    },
-    {
-      q: 'এটা কি শুধু শিশুদের জন্য?',
-      a: 'না। শিশুদের কথা ভেবে তৈরি হলেও, যেকোনো বয়সের মানুষ যারা বিশুদ্ধ, ভেজালমুক্ত নাস্তা পছন্দ করেন — সবার জন্যই উপযুক্ত। অফিসে, ভ্রমণে বা চায়ের সাথে পরিবারের সবাই উপভোগ করতে পারেন।',
-    },
-    {
-      q: '“ভেজালমুক্ত” বলতে কী বোঝানো হচ্ছে?',
-      a: 'এতে কোনো প্রিজারভেটিভ যোগ করা হয়নি, আর প্রতিটি উপাদান প্যাকেটে স্পষ্টভাবে লেখা আছে — অর্গানিক কলা, নারকেল তেল, লাল চিনি আর পরিচিত মসলা। এর বাইরে কিছু মেশানো হয় না।',
-    },
-    {
-      q: 'কোন বয়সের শিশুদের দেওয়া যাবে?',
-      // TODO: confirm the recommended age with your product team.
-      a: 'যেসব শিশু স্বাচ্ছন্দ্যে শক্ত ও মুচমুচে খাবার চিবিয়ে খেতে পারে, তাদের জন্য। খুব ছোট শিশুদের মুচমুচে খাবার দেওয়ার সময় পাশে থেকে নজর রাখুন। খাবারে অ্যালার্জি থাকলে প্যাকেটের উপাদান তালিকা দেখে নিন।',
-    },
-    {
-      q: 'এটা কি ঝাল? শিশুরা খেতে পারবে?',
-      // TODO: describe the actual spice level once confirmed.
-      a: 'এর ফ্লেভার চিলি লাইম গ্লেজড, তাই এতে মসলা আছে। প্রথমবার অল্প দিয়ে দেখে নিন আপনার শিশুর কেমন লাগে। প্রশ্ন থাকলে WhatsApp-এ জিজ্ঞেস করুন।',
-    },
-    {
-      q: 'কলাগুলো কি অর্গানিক?',
-      a: 'হ্যাঁ, ১০০% অর্গানিক কলা। প্যাকেটের উপাদান তালিকায় মূল উপাদান হিসেবে “Organic Bananas” উল্লেখ আছে।',
-    },
-    {
-      q: 'এতে কী কী উপাদান ব্যবহার করা হয়?',
-      a: 'প্যাকেটে উল্লেখিত উপাদান: অর্গানিক কলা, নারকেল তেল, লাল চিনি, জিরা, ধনিয়া, শুকনো আমের গুঁড়া, গোলমরিচ, মিনারেল সল্ট ব্লেন্ড ও নির্বাচিত মসলা।',
-    },
-    {
-      q: 'কীভাবে তৈরি করা হয়?',
-      a: 'অর্গানিক কলা পাতলা করে কেটে মসলায় ভিজিয়ে (Spice Infused) ভ্যাকুয়াম পদ্ধতিতে শুকিয়ে (Vacuum Dried) তৈরি করা হয় — কোনো প্রিজারভেটিভ ছাড়াই।',
-    },
-    {
-      q: 'কীভাবে সংরক্ষণ করতে হবে?',
-      a: 'ঠান্ডা ও শুকনো জায়গায়, সরাসরি রোদ থেকে দূরে রাখুন। প্যাকেট খোলার পর জিপ ভালোভাবে আটকে রাখুন।',
-    },
-    {
-      q: 'কত দিনের মধ্যে ডেলিভারি পাওয়া যাবে?',
-      // TODO: replace with the real delivery policy.
-      a: 'ডেলিভারির সময় আপনার এলাকার ওপর নির্ভর করে। অর্ডার নিশ্চিত করার সময় আমরা সঠিক সময় জানিয়ে দেব।',
-    },
-    {
-      q: 'কীভাবে অর্ডার করতে পারব?',
-      a: 'পেজের নিচের অর্ডার ফর্মে নাম, মোবাইল নম্বর ও ঠিকানা দিয়ে প্যাকেজ বেছে নিন, তারপর “অর্ডার নিশ্চিত করুন” চাপুন। কোনো প্রশ্ন থাকলে WhatsApp-এও আমাদের সাথে কথা বলতে পারেন।',
-    },
-  ] as FaqItem[],
 };
 
 export type SiteConfig = typeof site;

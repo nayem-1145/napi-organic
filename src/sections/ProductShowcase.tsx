@@ -31,6 +31,8 @@ function PouchStack({ packs }: { packs: number }) {
 
 function BundleCard({ b }: { b: ProductBundle }) {
   const { price, regular, savePct, perPack } = bundlePrice(b);
+  const saved = price !== null && regular !== null ? regular - price : 0;
+  const exactPerPack = price !== null && price % b.packs === 0;
   const f = !!b.featured;
   return (
     <li
@@ -54,7 +56,7 @@ function BundleCard({ b }: { b: ProductBundle }) {
         </div>
         {savePct > 0 && (
           <span className="shrink-0 rounded-full bg-amber px-3 py-1 text-xs font-bold text-forest-deep">
-            {toBnDigits(savePct)}% সাশ্রয়
+            {formatBdt(saved)} সাশ্রয়
           </span>
         )}
       </div>
@@ -75,7 +77,7 @@ function BundleCard({ b }: { b: ProductBundle }) {
         </span>
       </div>
       <p className={`mt-4 text-center text-sm font-medium ${f ? 'text-cream/75' : 'text-ink-soft'}`}>
-        {toBnDigits(b.packs)} × {toBnDigits(site.product.weightGrams)} গ্রাম · {site.product.flavour}
+        {toBnDigits(b.packs)}টি প্যাকেট × {toBnDigits(site.product.weightGrams)} গ্রাম · {site.product.flavour}
       </p>
 
       {/* price */}
@@ -89,7 +91,10 @@ function BundleCard({ b }: { b: ProductBundle }) {
               )}
             </div>
             {b.packs > 1 && perPack !== null && (
-              <p className={`mt-2 text-sm ${f ? 'text-cream/70' : 'text-ink-soft'}`}>প্রতি প্যাক {formatBdt(perPack)}</p>
+              <p className={`mt-2 text-sm ${f ? 'text-cream/70' : 'text-ink-soft'}`}>
+                প্রতি প্যাকেট {exactPerPack ? '' : 'প্রায় '}
+                {formatBdt(perPack)}
+              </p>
             )}
           </>
         ) : (

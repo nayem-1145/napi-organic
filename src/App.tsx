@@ -8,14 +8,13 @@ import { prefersReducedMotion } from './lib/utils';
 import { BrandIntro } from './sections/BrandIntro';
 import { BrandStory } from './sections/BrandStory';
 import { Experience } from './sections/Experience';
-import { Faq } from './sections/Faq';
 import { OrderSection } from './sections/OrderSection';
 import { Footer } from './sections/Footer';
 import { Ingredients } from './sections/Ingredients';
 import { KidsSection } from './sections/KidsSection';
-import { Lifestyle } from './sections/Lifestyle';
 import { ProductShowcase } from './sections/ProductShowcase';
-import { Reviews } from './sections/Reviews';
+// Hidden until real customer feedback is available — uncomment this and <Reviews /> below to bring it back.
+// import { Reviews } from './sections/Reviews';
 import { TrustBadges } from './sections/TrustBadges';
 
 export default function App() {
@@ -99,10 +98,8 @@ export default function App() {
         <BrandIntro />
         <ProductShowcase />
         <Ingredients />
-        <Reviews />
+        {/* <Reviews /> — hidden until real customer feedback is available */}
         <BrandStory />
-        <Lifestyle />
-        <Faq />
         <OrderSection />
       </main>
       <Footer />
