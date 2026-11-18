@@ -134,10 +134,8 @@ export const site = {
   contact: {
     /**
      * WhatsApp number in international format WITHOUT "+" or spaces, e.g. "8801XXXXXXXXX".
-     * TODO: add the real number. While empty, WhatsApp buttons open the contact
-     * picker with the message prefilled.
      */
-    whatsapp: '',
+    whatsapp: '8801608178233', // +880 1608-178233
     phoneDisplay: '', // TODO e.g. "০১XXX-XXXXXX"
     email: '', // TODO
     address: '', // TODO
