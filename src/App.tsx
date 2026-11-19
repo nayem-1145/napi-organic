@@ -5,7 +5,6 @@ import { StickyOrderBar } from './components/StickyOrderBar';
 import { loadMotion, startSmoothScroll } from './lib/motion';
 import { useStore } from './lib/store';
 import { prefersReducedMotion } from './lib/utils';
-import { BrandIntro } from './sections/BrandIntro';
 import { BrandStory } from './sections/BrandStory';
 import { Experience } from './sections/Experience';
 import { OrderSection } from './sections/OrderSection';
@@ -87,7 +86,7 @@ export default function App() {
 
   return (
     <>
-      <a href="#brand" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-forest focus:px-4 focus:py-2 focus:text-cream">
+      <a href="#kids" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-forest focus:px-4 focus:py-2 focus:text-cream">
         মূল বিষয়বস্তুতে যান
       </a>
       <Nav />
@@ -95,7 +94,6 @@ export default function App() {
         <Experience />
         <KidsSection />
         <TrustBadges />
-        <BrandIntro />
         <ProductShowcase />
         <Ingredients />
         {/* <Reviews /> — hidden until real customer feedback is available */}

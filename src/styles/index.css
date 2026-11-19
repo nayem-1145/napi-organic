@@ -1,6 +1,20 @@
 @import 'tailwindcss';
 
 /* desktop-width but short screens (most laptops: 1366×657, 1280×720, 1536×730…) */
+/*
+ * Bengali digits (০–৯) only, from Noto Sans Bengali. Hind Siliguri's "১" is a hook
+ * that reads like ৯/৬, so every Bengali number in body text uses this face instead.
+ * unicode-range keeps it to the ten digits — all other letters still use Hind Siliguri.
+ */
+@font-face {
+  font-family: 'Bn Digits';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../assets/fonts/bn-digits.woff2') format('woff2');
+  unicode-range: U+09E6-09EF;
+}
+
 @custom-variant short (@media (min-width: 64rem) and (max-height: 800px));
 
 @theme {
@@ -18,8 +32,8 @@
   --color-ink: #1f2a24;
   --color-ink-soft: #55625a;
 
-  /* Poppins renders Latin + numerals; Bengali falls through to Hind Siliguri (same foundry, matched metrics) */
-  --font-sans: 'Poppins', 'Hind Siliguri', 'Noto Sans Bengali', system-ui, sans-serif;
+  /* Poppins renders Latin; Bengali digits use Bn Digits (above); other Bengali falls through to Hind Siliguri */
+  --font-sans: 'Poppins', 'Bn Digits', 'Hind Siliguri', 'Noto Sans Bengali', system-ui, sans-serif;
   --font-display: 'Anek Bangla', 'Poppins', 'Hind Siliguri', sans-serif;
 
   --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
