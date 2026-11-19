@@ -462,43 +462,49 @@ function ThankYou({ order, onClose }: { order: PlacedOrder; onClose: () => void 
 
   return (
     <div
-      className="animate-fade-in fixed inset-0 z-[80] grid place-items-center overflow-y-auto bg-forest-deep/70 p-4 backdrop-blur-md"
+      className="animate-fade-in fixed inset-0 z-[80] grid place-items-center bg-forest-deep/70 p-4 backdrop-blur-md"
       role="dialog"
       aria-modal="true"
       aria-labelledby={titleId}
       // no close on outside click — the customer should see the order details; close via ✕ / buttons only
     >
-      <div className="animate-pop-in relative w-full max-w-lg overflow-hidden rounded-[2rem] bg-white p-7 text-center shadow-2xl sm:p-10">
+      {/* max 90% of the screen height, always centred; only the order details scroll so ✕ and the buttons stay visible */}
+      <div className="animate-pop-in relative flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-[2rem] bg-white p-6 text-center shadow-2xl supports-[height:100dvh]:max-h-[90dvh] sm:p-9">
         <div aria-hidden className="pointer-events-none absolute inset-x-0 -top-24 h-48 bg-gradient-to-b from-banana/50 to-transparent blur-2xl" />
         <button
           ref={closeRef}
           onClick={onClose}
-          className="absolute top-4 right-4 grid h-11 w-11 place-items-center rounded-full text-ink-soft transition-colors hover:bg-cream hover:text-forest"
+          className="absolute top-3 right-3 z-10 grid h-11 w-11 place-items-center rounded-full bg-white/80 text-ink-soft transition-colors hover:bg-cream hover:text-forest"
           aria-label="বন্ধ করুন"
         >
           <X size={22} />
         </button>
 
-        <div className="relative mx-auto grid h-24 w-24 place-items-center">
+        <div className="relative mx-auto grid h-20 w-20 shrink-0 place-items-center sm:h-24 sm:w-24">
           <span aria-hidden className="animate-ring-pulse absolute inset-0 rounded-full bg-leaf/40" />
-          <span className="relative grid h-24 w-24 place-items-center rounded-full bg-gradient-to-br from-forest to-sage shadow-[0_18px_36px_-14px_rgb(18_55_44/0.8)]">
-            <svg viewBox="0 0 24 24" className="h-12 w-12 text-banana" fill="none" aria-hidden>
+          <span className="relative grid h-full w-full place-items-center rounded-full bg-gradient-to-br from-forest to-sage shadow-[0_18px_36px_-14px_rgb(18_55_44/0.8)]">
+            <svg viewBox="0 0 24 24" className="h-10 w-10 text-banana sm:h-12 sm:w-12" fill="none" aria-hidden>
               <path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" pathLength={1} className="animate-draw" />
             </svg>
           </span>
         </div>
 
-        <h2 id={titleId} className="display relative mt-6 text-[2rem] text-forest sm:text-[2.4rem]">
+        <h2 id={titleId} className="display relative mt-5 shrink-0 text-[1.8rem] text-forest sm:text-[2.3rem]">
           ধন্যবাদ, {order.name.split(' ')[0]}!
         </h2>
-        <p className="relative mt-2 text-ink-soft">আপনার অর্ডারটি আমরা পেয়েছি। খুব শীঘ্রই আপনার নম্বরে কল করে অর্ডার নিশ্চিত করা হবে।</p>
+        <p className="relative mt-2 shrink-0 text-ink-soft">আপনার অর্ডারটি আমরা পেয়েছি। খুব শীঘ্রই আপনার নম্বরে কল করে অর্ডার নিশ্চিত করা হবে।</p>
 
-        <div className="relative mt-6 inline-flex items-center gap-2 rounded-full bg-banana-soft px-4 py-2 ring-1 ring-amber/40">
+        <div className="relative mx-auto mt-5 inline-flex shrink-0 items-center gap-2 rounded-full bg-banana-soft px-4 py-2 ring-1 ring-amber/40">
           <span className="text-sm text-ink-soft">অর্ডার আইডি</span>
           <span className="font-mono font-bold tracking-wider text-forest">{order.orderId}</span>
         </div>
 
-        <dl className="relative mt-6 divide-y divide-ink/8 rounded-2xl bg-cream px-5 text-left">
+        {/* order details: takes the remaining height and scrolls inside the box */}
+        <dl
+          className="relative mt-5 min-h-[7.5rem] flex-initial divide-y divide-ink/8 overflow-y-auto overscroll-contain rounded-2xl bg-cream px-5 text-left"
+          tabIndex={0}
+          aria-label="অর্ডারের বিবরণ"
+        >
           {rows.map(([k, v]) => (
             <div key={k} className="flex items-center justify-between gap-4 py-3 text-[0.95rem]">
               <dt className="text-ink-soft">{k}</dt>
@@ -507,7 +513,7 @@ function ThankYou({ order, onClose }: { order: PlacedOrder; onClose: () => void 
           ))}
         </dl>
 
-        <div className="relative mt-7 flex flex-col gap-3 sm:flex-row">
+        <div className="relative mt-5 flex shrink-0 flex-col gap-3 sm:flex-row">
           <button onClick={onClose} className="btn btn-forest flex-1">
             ঠিক আছে
           </button>
