@@ -9,6 +9,7 @@ import {
   OrderNotConfiguredError,
   submitOrder,
   type DeliveryArea,
+  deliveryCharge,
   type PlacedOrder,
 } from '../lib/order';
 import { bundlePrice } from '../lib/pricing';
@@ -52,7 +53,9 @@ export function OrderSection() {
 
   const bundle = site.bundles.find((b) => b.id === bundleId) ?? site.bundles[0];
   const { price } = bundlePrice(bundle);
-  const total = price !== null ? price * qty : null;
+  const subtotal = price !== null ? price * qty : null;
+  const delivery = area ? deliveryCharge(area) : null;
+  const total = subtotal !== null && delivery !== null ? subtotal + delivery : null;
 
   const set = (k: keyof Fields) => (v: string) => {
     const next = { ...fields, [k]: v };
@@ -296,7 +299,7 @@ export function OrderSection() {
                 {(Object.keys(AREA_LABEL) as DeliveryArea[]).map((a, i) => (
                   <label
                     key={a}
-                    className={`flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-2xl px-3 text-[0.95rem] font-semibold transition-all duration-300 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-amber-deep ${
+                    className={`flex min-h-14 cursor-pointer items-center justify-center gap-2 rounded-2xl px-3 text-[0.95rem] font-semibold transition-all duration-300 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-amber-deep ${
                       area === a
                         ? 'bg-forest text-cream'
                         : `bg-cream text-forest ring-1 hover:ring-amber ${errors.area ? 'ring-[#d1495b]' : 'ring-forest/12'}`
@@ -315,7 +318,12 @@ export function OrderSection() {
                       {...(i === 0 ? { 'data-field': 'area' } : {})}
                     />
                     {area === a && <Check size={16} strokeWidth={3} aria-hidden />}
-                    {AREA_LABEL[a]}
+                    <span className="flex flex-col items-center leading-tight">
+                      {AREA_LABEL[a]}
+                      <span className={`text-xs font-medium ${area === a ? 'text-cream/80' : 'text-ink-soft'}`}>
+                        ডেলিভারি {formatBdt(deliveryCharge(a))}
+                      </span>
+                    </span>
                   </label>
                 ))}
               </div>
@@ -367,14 +375,21 @@ export function OrderSection() {
                     </span>
                   </p>
                 </div>
-                <div className="text-right">
-                  <p className="text-sm text-ink-soft">মোট</p>
-                  <p className="display text-2xl leading-tight text-forest">{total !== null ? formatBdt(total) : '—'}</p>
-                </div>
               </div>
-              <p className="mt-2 text-sm text-ink-soft">
-                {total === null ? 'মূল্য ও ডেলিভারি চার্জ কনফার্মেশন কলে জানিয়ে দেওয়া হবে।' : 'ডেলিভারি চার্জ (যদি থাকে) কনফার্মেশন কলে জানিয়ে দেওয়া হবে।'}
-              </p>
+              <dl className="mt-4 space-y-1.5 border-t border-amber/30 pt-3 text-[0.95rem]">
+                <div className="flex justify-between gap-4">
+                  <dt className="text-ink-soft">পণ্যের মূল্য</dt>
+                  <dd className="font-semibold text-forest">{subtotal !== null ? formatBdt(subtotal) : '—'}</dd>
+                </div>
+                <div className="flex justify-between gap-4">
+                  <dt className="text-ink-soft">ডেলিভারি চার্জ{area ? ` (${AREA_LABEL[area]})` : ''}</dt>
+                  <dd className="font-semibold text-forest">{delivery !== null ? formatBdt(delivery) : 'এলাকা বেছে নিন'}</dd>
+                </div>
+                <div className="flex items-baseline justify-between gap-4 border-t border-amber/30 pt-2">
+                  <dt className="font-semibold text-forest">সর্বমোট</dt>
+                  <dd className="display text-2xl leading-tight text-forest">{total !== null ? formatBdt(total) : '—'}</dd>
+                </div>
+              </dl>
             </div>
 
             {status === 'error' && (
@@ -441,7 +456,9 @@ function ThankYou({ order, onClose }: { order: PlacedOrder; onClose: () => void 
     ['মোবাইল', toBnDigits(order.phone)],
     ['এলাকা', AREA_LABEL[order.area]],
   ];
-  if (order.total !== null) rows.push(['মোট মূল্য', formatBdt(order.total)]);
+  if (order.subtotal !== null) rows.push(['পণ্যের মূল্য', formatBdt(order.subtotal)]);
+  rows.push(['ডেলিভারি চার্জ', formatBdt(order.delivery)]);
+  if (order.total !== null) rows.push(['সর্বমোট', formatBdt(order.total)]);
 
   return (
     <div

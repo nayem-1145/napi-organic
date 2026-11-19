@@ -23,6 +23,8 @@ export interface ProductVariant {
 export interface ProductBundle {
   id: string;
   name: string;
+  /** Name written to the Google Sheet (English) */
+  sheetName: string;
   /** Short line under the name, e.g. who it is for */
   tagline: string;
   /** Number of packets in the bundle (each packet = product.weightGrams) */
@@ -86,6 +88,7 @@ export const site = {
     {
       id: 'single',
       name: 'সিঙ্গেল প্যাক',
+      sheetName: 'Single Pack',
       tagline: 'প্রথমবার চেখে দেখুন',
       packs: 4,
       priceBdt: 400, // 4 × ১০০ টাকা
@@ -94,6 +97,7 @@ export const site = {
     {
       id: 'family',
       name: 'ফ্যামিলি প্যাক',
+      sheetName: 'Family Pack',
       tagline: 'শিশু থেকে বড় — পরিবারের সবার জন্য',
       packs: 6,
       priceBdt: 580,
@@ -104,6 +108,7 @@ export const site = {
     {
       id: 'value',
       name: 'বান্ডেল প্যাক',
+      sheetName: 'Bundle Pack',
       tagline: 'বড় পরিবার বা উপহারের জন্য',
       packs: 9,
       priceBdt: 780,
@@ -111,23 +116,30 @@ export const site = {
     },
   ] as ProductBundle[],
 
+  /** Delivery charge in BDT, by delivery area (added to the order total). */
+  delivery: {
+    inside: 70, // ঢাকার ভেতরে
+    outside: 120, // ঢাকার বাইরে
+  },
+
   /**
-   * ORDER FORM — GitHub Pages has no server, so orders are sent to a form service
-   * that emails them to you. Default: Web3Forms (free, 250 orders/month).
+   * ORDER FORM — GitHub Pages has no server, so orders are sent elsewhere.
    *
-   *  1. Go to https://web3forms.com, enter the email that should receive orders.
-   *  2. Copy the Access Key they email you and paste it below.
+   * 1) Google Sheet (main order list): set `sheetUrl` to the Web app URL of the
+   *    Apps Script in google-apps-script/Code.gs (setup steps are in that file).
+   *    Every order becomes a new row with status "Pending Verification".
    *
-   * Until a key is set, the live site shows an error + WhatsApp option instead of
-   * pretending the order went through (in `npm run dev` it simulates success so you
-   * can preview the Thank You screen).
+   * 2) Optional e-mail copy via Web3Forms: paste an access key from
+   *    https://web3forms.com into `accessKey`. Leave empty to skip e-mails.
    *
-   * Formspree also works: set `endpoint` to your https://formspree.io/f/xxxx URL and
-   * leave `accessKey` empty.
+   * With neither set, the live site shows an error + WhatsApp option instead of
+   * pretending the order went through (`npm run dev` simulates success so you can
+   * preview the Thank You screen).
    */
   orderForm: {
+    sheetUrl: 'https://script.google.com/macros/s/AKfycbxp4VvIJT5DPjf4iZLgg3-gF0xUpbASlEnydF-LVdDE_sxO0doNje5jNfBN7Il5OVd5/exec',
     endpoint: 'https://api.web3forms.com/submit',
-    accessKey: '', // TODO: paste your Web3Forms access key
+    accessKey: '', // optional: Web3Forms access key for an e-mail copy of each order
     emailSubject: 'নতুন অর্ডার — Napi Organic Banana Chips',
   },
 

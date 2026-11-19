@@ -18,12 +18,24 @@ export interface PlacedOrder extends OrderInput {
   orderId: string;
   bundleName: string;
   packs: number;
+  /** product price (bundle × quantity) */
+  subtotal: number | null;
+  delivery: number;
+  /** subtotal + delivery */
   total: number | null;
 }
 
 export const AREA_LABEL: Record<DeliveryArea, string> = {
   inside: 'ঢাকার ভেতরে',
   outside: 'ঢাকার বাইরে',
+};
+
+export const deliveryCharge = (area: DeliveryArea): number => site.delivery[area];
+
+/** Exactly what goes into the sheet's "Shipping Location" column. */
+export const SHEET_AREA: Record<DeliveryArea, string> = {
+  inside: 'Dhakar Vitore',
+  outside: 'Dhakar bahire',
 };
 
 const BN = '০১২৩৪৫৬৭৮৯';
@@ -47,10 +59,12 @@ function makeOrderId(): string {
   return 'NAPI-' + Array.from(bytes, (b) => alphabet[b % alphabet.length]).join('');
 }
 
-export const isOrderFormConfigured = () => {
+const emailConfigured = () => {
   const { endpoint, accessKey } = site.orderForm;
   return !!endpoint && (!endpoint.includes('web3forms') || !!accessKey);
 };
+
+export const isOrderFormConfigured = () => !!site.orderForm.sheetUrl || emailConfigured();
 
 export class OrderNotConfiguredError extends Error {}
 
@@ -63,7 +77,9 @@ export async function submitOrder(input: OrderInput, honeypot = ''): Promise<Pla
     orderId: makeOrderId(),
     bundleName: bundle.name,
     packs: bundle.packs * input.quantity,
-    total: price !== null ? price * input.quantity : null,
+    subtotal: price !== null ? price * input.quantity : null,
+    delivery: deliveryCharge(input.area),
+    total: price !== null ? price * input.quantity + deliveryCharge(input.area) : null,
   };
 
   if (!isOrderFormConfigured()) {
@@ -76,13 +92,46 @@ export async function submitOrder(input: OrderInput, honeypot = ''): Promise<Pla
     throw new OrderNotConfiguredError('Order form endpoint is not configured');
   }
 
-  const { endpoint, accessKey, emailSubject } = site.orderForm;
+  if (honeypot) return order; // bot: pretend success, store nothing
+
+  const { sheetUrl, endpoint, accessKey, emailSubject } = site.orderForm;
+
+  // 1) Google Sheet — the order list. Column names must match the sheet's header row.
+  if (sheetUrl) {
+    const row = {
+      'Order Status': 'Pending Verification',
+      'Customer Name': order.name,
+      'Phone Number': order.phone,
+      'Selected Package': `${bundle.sheetName} (${bundle.packs} packets)`,
+      'Box Quantity': order.quantity,
+      'Total Price': order.total ?? '',
+      'Shipping Location': SHEET_AREA[order.area],
+      'Full Address': order.address,
+      // Filled only if the sheet has these extra headers (optional):
+      'Order ID': order.orderId,
+      'Order Date': new Date().toISOString(),
+      'Total Packets': order.packs,
+      'Product Price': order.subtotal ?? '',
+      'Delivery Charge': order.delivery,
+      'Note': order.note,
+    };
+    // text/plain keeps this a "simple" request, so Apps Script needs no CORS preflight.
+    const res = await fetch(sheetUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(row),
+    });
+    const body = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+    if (!res.ok || !body.ok) throw new Error(`Sheet submission failed (${res.status}) ${body.error ?? ''}`);
+  }
+
+  // 2) Optional e-mail copy. If the sheet already has the order, an e-mail hiccup must not fail it.
+  if (!emailConfigured()) return order;
   // Flat, human-readable fields: this is exactly what arrives in the order email.
   const payload: Record<string, string> = {
     ...(accessKey ? { access_key: accessKey } : {}),
     subject: `${emailSubject} — ${order.orderId}`,
     from_name: 'Napi Organic Website',
-    botcheck: honeypot,
     'অর্ডার আইডি': order.orderId,
     'নাম': order.name,
     'মোবাইল': order.phone,
@@ -90,16 +139,23 @@ export async function submitOrder(input: OrderInput, honeypot = ''): Promise<Pla
     'এলাকা': AREA_LABEL[order.area],
     'প্যাকেজ': `${bundle.name} (${toBnDigits(bundle.packs)} প্যাক) × ${toBnDigits(order.quantity)}`,
     'মোট প্যাকেট': `${toBnDigits(order.packs)} × ${toBnDigits(site.product.weightGrams)} গ্রাম`,
-    'মোট মূল্য': order.total !== null ? formatBdt(order.total) : 'মূল্য নির্ধারিত নয় — কল করে জানাতে হবে',
+    'পণ্যের মূল্য': order.subtotal !== null ? formatBdt(order.subtotal) : '—',
+    'ডেলিভারি চার্জ': formatBdt(order.delivery),
+    'সর্বমোট': order.total !== null ? formatBdt(order.total) : 'মূল্য নির্ধারিত নয় — কল করে জানাতে হবে',
     'নোট': order.note || '—',
   };
 
-  const res = await fetch(endpoint, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify(payload),
-  });
-  const body = (await res.json().catch(() => ({}))) as { success?: boolean; ok?: boolean };
-  if (!res.ok || body.success === false) throw new Error(`Order submission failed (${res.status})`);
+  try {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const body = (await res.json().catch(() => ({}))) as { success?: boolean; ok?: boolean };
+    if (!res.ok || body.success === false) throw new Error(`Order e-mail failed (${res.status})`);
+  } catch (err) {
+    if (!sheetUrl) throw err; // e-mail is the only channel → report the failure
+    console.warn('[Napi Organic] order saved to the sheet, but the e-mail copy failed', err);
+  }
   return order;
 }

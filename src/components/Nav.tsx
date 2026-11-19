@@ -5,7 +5,7 @@ import { Menu, ShoppingCart, X } from './Icons';
 
 export const NAV_LINKS = [
   { id: 'kids', label: 'শিশুদের জন্য' },
-  { id: 'why', label: 'কেন Napi' },
+  { id: 'why', label: 'কেন ন্যাপি' },
   { id: 'product', label: 'প্যাকেজ' },
   { id: 'ingredients', label: 'উপাদান' },
   // { id: 'reviews', label: 'মতামত' }, // hidden with the Reviews section
