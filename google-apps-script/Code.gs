@@ -11,6 +11,9 @@
  *  4. Copy the "Web app URL" (https://script.google.com/macros/s/…/exec)
  *     and paste it into src/config/site.ts → orderForm.sheetUrl.
  *
+ * E-mail on every order: see NOTIFY_EMAIL below. After pasting, run "testEmail"
+ * once from the editor to allow e-mail sending, then deploy a new version.
+ *
  * If you edit this script later: Deploy → Manage deployments → pencil icon →
  * Version: "New version" → Deploy. (The URL stays the same.)
  *
@@ -60,12 +63,80 @@ function doPost(e) {
     });
     sheet.appendRow(row);
 
+    // e-mail notification — a mail problem must never fail the order (the row is already saved)
+    try {
+      sendOrderEmail(data, ss.getUrl());
+    } catch (mailErr) {
+      console.error('Order e-mail failed: ' + mailErr);
+    }
+
     return json({ ok: true });
   } catch (err) {
     return json({ ok: false, error: String(err && err.message ? err.message : err) });
   } finally {
     lock.releaseLock();
   }
+}
+
+/**
+ * E-MAIL NOTIFICATION
+ * Who gets the "new order" e-mail. Leave empty to send it to the Google account
+ * that owns this script. Several addresses: 'a@gmail.com,b@gmail.com'.
+ */
+var NOTIFY_EMAIL = '';
+
+function sendOrderEmail(data, sheetUrl) {
+  var to = NOTIFY_EMAIL || Session.getEffectiveUser().getEmail();
+  if (!to) return;
+
+  var fields = [
+    'Order ID', 'Customer Name', 'Phone Number', 'Selected Package', 'Box Quantity',
+    'Product Price', 'Delivery Charge', 'Total Price', 'Shipping Location', 'Full Address', 'Note',
+  ];
+  var rows = fields
+    .filter(function (k) { return data[k] !== undefined && data[k] !== ''; })
+    .map(function (k) {
+      return '<tr><td style="padding:6px 12px;color:#555;white-space:nowrap">' + k +
+        '</td><td style="padding:6px 12px;font-weight:600">' + esc(data[k]) + '</td></tr>';
+    })
+    .join('');
+
+  var tel = String(data['Phone Number'] || '');
+  var html =
+    '<div style="font-family:Arial,sans-serif;font-size:15px">' +
+    '<h2 style="color:#1B4D3E;margin:0 0 12px">নতুন অর্ডার এসেছে 🎉</h2>' +
+    '<table style="border-collapse:collapse;background:#f7f5ee">' + rows + '</table>' +
+    '<p style="margin-top:16px">' +
+    '<a href="tel:' + esc(tel) + '">📞 কল করুন</a> &nbsp;·&nbsp; ' +
+    '<a href="https://wa.me/88' + esc(tel) + '">WhatsApp</a> &nbsp;·&nbsp; ' +
+    '<a href="' + sheetUrl + '">Google Sheet খুলুন</a></p>' +
+    '</div>';
+
+  MailApp.sendEmail({
+    to: to,
+    subject: 'নতুন অর্ডার — ' + (data['Customer Name'] || '') + ' — ৳' + (data['Total Price'] || ''),
+    htmlBody: html,
+    name: 'Napi Organic Orders',
+  });
+}
+
+function esc(v) {
+  return String(v).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+
+/**
+ * Run this ONCE from the Apps Script editor (select "testEmail" → Run) to give
+ * the script permission to send e-mail and to receive a sample notification.
+ */
+function testEmail() {
+  sendOrderEmail({
+    'Order ID': 'NAPI-TEST', 'Customer Name': 'Test Customer', 'Phone Number': '01700000000',
+    'Selected Package': 'Family Pack (6 packets)', 'Box Quantity': 1, 'Product Price': 580,
+    'Delivery Charge': 70, 'Total Price': 650, 'Shipping Location': 'Dhakar Vitore',
+    'Full Address': 'Test address',
+  }, SpreadsheetApp.getActiveSpreadsheet().getUrl());
 }
 
 /** Open the Web app URL in a browser to check that the deployment works. */

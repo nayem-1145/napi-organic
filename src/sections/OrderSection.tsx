@@ -466,7 +466,7 @@ function ThankYou({ order, onClose }: { order: PlacedOrder; onClose: () => void 
       role="dialog"
       aria-modal="true"
       aria-labelledby={titleId}
-      onClick={(e) => e.target === e.currentTarget && onClose()}
+      // no close on outside click — the customer should see the order details; close via ✕ / buttons only
     >
       <div className="animate-pop-in relative w-full max-w-lg overflow-hidden rounded-[2rem] bg-white p-7 text-center shadow-2xl sm:p-10">
         <div aria-hidden className="pointer-events-none absolute inset-x-0 -top-24 h-48 bg-gradient-to-b from-banana/50 to-transparent blur-2xl" />
