@@ -87,8 +87,8 @@ export const site = {
   bundles: [
     {
       id: 'single',
-      name: 'সিঙ্গেল প্যাক',
-      sheetName: 'Single Pack',
+      name: 'ট্রায়াল প্যাক',
+      sheetName: 'Trial Pack',
       tagline: 'প্রথমবার চেখে দেখুন',
       packs: 4,
       priceBdt: 400, // 4 × ১০০ টাকা
