@@ -42,8 +42,8 @@ export function BrandStory() {
         <div className="mt-16 space-y-20 lg:mt-28 lg:space-y-36">
           {STEPS.map((s, i) => {
             const flip = i % 2 === 1;
-            // step 1 uses a portrait photo → narrower column + 4:5 frame so it isn't blown up
-            const tall = i === 0;
+            // set to true for a portrait photo → narrower column + 4:5 frame so it isn't blown up
+            const tall = false;
             return (
               <article key={s.title} className="grid items-center gap-8 lg:grid-cols-12 lg:gap-10">
                 <div
@@ -59,7 +59,7 @@ export function BrandStory() {
                       const p = s.img();
                       return p && !p.startsWith('http') && !p.startsWith('data:') ? asset(p) : p;
                     })()}
-                    alt={tall ? 'কলাবাগানে গাছে ঝুলে থাকা কাঁচা কলার কাঁদি' : s.title}
+                    alt={i === 0 ? 'কলাবাগানে গাছে ঝুলে থাকা কাঁচা কলার কাঁদি ও কলার মোচা' : s.title}
                     brief={s.brief}
                     tone={s.tone}
                     className={`w-full ${tall ? 'aspect-[4/5]' : 'aspect-[4/3]'}`}

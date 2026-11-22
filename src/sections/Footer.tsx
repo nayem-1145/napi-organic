@@ -1,5 +1,5 @@
 import { LogoTab, OrderButton } from '../components/Brand';
-import { FacebookIcon, Globe, InstagramIcon, WhatsAppIcon } from '../components/Icons';
+import { FacebookIcon, InstagramIcon, TikTokIcon, WhatsAppIcon } from '../components/Icons';
 import { NAV_LINKS } from '../components/Nav';
 import { site } from '../config/site';
 import { scrollToId, toBnDigits } from '../lib/utils';
@@ -46,17 +46,17 @@ export function Footer() {
               {c.address && <li>{c.address}</li>}
               <li>
                 <a href={c.facebook} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 py-1 hover:text-banana">
-                  <FacebookIcon /> facebook.com/napiorganic
+                  <FacebookIcon /> Facebook
                 </a>
               </li>
               <li>
                 <a href={c.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 py-1 hover:text-banana">
-                  <InstagramIcon /> instagram.com/napiorganic
+                  <InstagramIcon /> Instagram
                 </a>
               </li>
               <li>
-                <a href={c.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 py-1 hover:text-banana">
-                  <Globe size={18} strokeWidth={1.6} /> napiorganic.com
+                <a href={c.tiktok} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 py-1 hover:text-banana">
+                  <TikTokIcon /> TikTok
                 </a>
               </li>
             </ul>

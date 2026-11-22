@@ -151,10 +151,10 @@ export const site = {
     phoneDisplay: '', // TODO e.g. "০১XXX-XXXXXX"
     email: '', // TODO
     address: '', // TODO
-    // The three links below are printed on the supplied package artwork.
+    // Social links shown in the footer.
     facebook: 'https://facebook.com/napiorganic',
     instagram: 'https://instagram.com/napiorganic',
-    website: 'https://napiorganic.com',
+    tiktok: 'https://www.tiktok.com/@napi.organic',
   },
 
   /**
@@ -162,7 +162,7 @@ export const site = {
    * placeholder is shown. Drop files into /public/images and set the paths.
    */
   images: {
-    plantation: 'images/banana-garden.webp' as string | null, // own photo: banana bunches hanging in the garden
+    plantation: 'images/banana-garden-v2.webp' as string | null, // banana bunch with flower in the garden (4:3)
     preparation: 'images/chips-bowl.webp' as string | null, // our own product photo
     ingredients: null as string | null, // optional flat-lay of all ingredients
     /** Kids section — own photo of a child with the product */
