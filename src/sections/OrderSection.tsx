@@ -1,3 +1,4 @@
+import { trackOrderComplete } from '../lib/analytics';
 import { useCallback, useEffect, useId, useRef, useState, type FormEvent } from 'react';
 import { createPortal } from 'react-dom';
 import { WhatsAppButton } from '../components/Brand';
@@ -89,6 +90,8 @@ export function OrderSection() {
         },
         honeypotRef.current?.value ?? '',
       );
+      // count real orders only (a filled honeypot = bot, shown success but nothing stored)
+      if (!honeypotRef.current?.value) trackOrderComplete(order);
       setPlaced(order);
       setStatus('idle');
       setFields(EMPTY);
