@@ -9,6 +9,8 @@ import { WA_MESSAGES, whatsappUrl } from '../lib/whatsapp';
 /** Pouch offsets for 1, 2 or 3+ visible packs (centre pack sits in front). */
 const FAN: Record<number, number[]> = { 1: [0], 2: [-0.6, 0.6], 3: [-1, 1, 0] };
 
+const freeDelivery = Object.values(site.delivery).every((d) => d === 0);
+
 function PouchStack({ packs }: { packs: number }) {
   const offsets = FAN[Math.min(packs, 3)];
   return (
@@ -94,6 +96,7 @@ function BundleCard({ b }: { b: ProductBundle }) {
               <p className={`mt-2 text-sm ${f ? 'text-cream/70' : 'text-ink-soft'}`}>
                 প্রতি প্যাকেট {exactPerPack ? '' : 'প্রায় '}
                 {formatBdt(perPack)}
+                {freeDelivery && ' · ডেলিভারি ফ্রি'}
               </p>
             )}
           </>

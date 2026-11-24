@@ -75,13 +75,13 @@ export const site = {
     name: 'Napi Organic Banana Chips',
     flavour: 'চিলি লাইম গ্লেজড',
     weightGrams: 100,
-    priceBdt: 100, // per packet (BDT)
+    priceBdt: 120, // per packet (BDT)
     maxQuantity: 20,
   } as ProductVariant,
 
   /**
    * Package options shown in the "প্যাকেজ বেছে নিন" section.
-   * Prices in BDT. Regular price = packets × product.priceBdt (১০০ টাকা);
+   * Prices in BDT. priceBdt null = packets × product.priceBdt (১২০ টাকা);
    * a lower bundle price automatically shows the "সাশ্রয়" badge.
    */
   bundles: [
@@ -91,7 +91,7 @@ export const site = {
       sheetName: 'Trial Pack',
       tagline: 'প্রথমবার চেখে দেখুন',
       packs: 4,
-      priceBdt: 400, // 4 × ১০০ টাকা
+      priceBdt: null, // 4 × ১২০ = ৪৮০ টাকা
       perks: ['৪টি ১০০ গ্রাম জিপ-লক প্যাকেট', 'শিশু বা নিজের জন্য — চেখে দেখার জন্য আদর্শ'],
     },
     {
@@ -99,27 +99,27 @@ export const site = {
       name: 'ফ্যামিলি প্যাক',
       sheetName: 'Family Pack',
       tagline: 'শিশু থেকে বড় — পরিবারের সবার জন্য',
-      packs: 6,
-      priceBdt: 580,
+      packs: 5,
+      priceBdt: null, // 5 × ১২০ = ৬০০ টাকা
       featured: true,
       ribbon: 'প্রস্তাবিত',
-      perks: ['৬টি ১০০ গ্রাম জিপ-লক প্যাকেট', 'শিশুদের নাস্তা আর বড়দের আড্ডায়', 'খোলার পর জিপ আটকে রাখা যায়'],
+      perks: ['৫টি ১০০ গ্রাম জিপ-লক প্যাকেট', 'শিশুদের নাস্তা আর বড়দের আড্ডায়', 'খোলার পর জিপ আটকে রাখা যায়'],
     },
     {
       id: 'value',
       name: 'বান্ডেল প্যাক',
       sheetName: 'Bundle Pack',
       tagline: 'বড় পরিবার বা উপহারের জন্য',
-      packs: 9,
-      priceBdt: 780,
-      perks: ['৯টি ১০০ গ্রাম জিপ-লক প্যাকেট', 'সবচেয়ে কম দামে প্রতি প্যাকেট', 'যৌথ পরিবার বা প্রিয়জনকে উপহার'],
+      packs: 6,
+      priceBdt: 700, // 6 × ১২০ = ৭২০ → ৭০০ টাকা (৳২০ ছাড়)
+      perks: ['৬টি ১০০ গ্রাম জিপ-লক প্যাকেট', 'যৌথ পরিবার বা প্রিয়জনকে উপহার'],
     },
   ] as ProductBundle[],
 
-  /** Delivery charge in BDT, by delivery area (added to the order total). */
+  /** Delivery charge in BDT, by delivery area (added to the order total). 0 = free — shown as "ফ্রি". */
   delivery: {
-    inside: 70, // ঢাকার ভেতরে
-    outside: 120, // ঢাকার বাইরে
+    inside: 0, // ঢাকার ভেতরে — free
+    outside: 0, // ঢাকার বাইরে — free
   },
 
   /**

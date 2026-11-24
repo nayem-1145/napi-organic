@@ -32,6 +32,9 @@ export const AREA_LABEL: Record<DeliveryArea, string> = {
 
 export const deliveryCharge = (area: DeliveryArea): number => site.delivery[area];
 
+/** '৳৭০', or 'ফ্রি' when delivery costs nothing. */
+export const formatDelivery = (amount: number) => (amount === 0 ? 'ফ্রি' : formatBdt(amount));
+
 /** Exactly what goes into the sheet's "Shipping Location" column. */
 export const SHEET_AREA: Record<DeliveryArea, string> = {
   inside: 'Dhakar Vitore',
@@ -140,7 +143,7 @@ export async function submitOrder(input: OrderInput, honeypot = ''): Promise<Pla
     'প্যাকেজ': `${bundle.name} (${toBnDigits(bundle.packs)} প্যাক) × ${toBnDigits(order.quantity)}`,
     'মোট প্যাকেট': `${toBnDigits(order.packs)} × ${toBnDigits(site.product.weightGrams)} গ্রাম`,
     'পণ্যের মূল্য': order.subtotal !== null ? formatBdt(order.subtotal) : '—',
-    'ডেলিভারি চার্জ': formatBdt(order.delivery),
+    'ডেলিভারি চার্জ': formatDelivery(order.delivery),
     'সর্বমোট': order.total !== null ? formatBdt(order.total) : 'মূল্য নির্ধারিত নয় — কল করে জানাতে হবে',
     'নোট': order.note || '—',
   };

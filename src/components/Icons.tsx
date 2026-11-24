@@ -15,6 +15,7 @@ export {
   Banana,
   Heart,
   Globe,
+  Truck,
   ShoppingBag,
   ShoppingCart,
   Star,

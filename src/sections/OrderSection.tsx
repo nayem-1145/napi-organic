@@ -2,7 +2,7 @@ import { trackOrderComplete } from '../lib/analytics';
 import { useCallback, useEffect, useId, useRef, useState, type FormEvent } from 'react';
 import { createPortal } from 'react-dom';
 import { WhatsAppButton } from '../components/Brand';
-import { Check, Minus, Plus, ShoppingCart, WhatsAppIcon, X } from '../components/Icons';
+import { Check, Minus, Plus, ShoppingCart, Truck, WhatsAppIcon, X } from '../components/Icons';
 import { site } from '../config/site';
 import {
   AREA_LABEL,
@@ -11,6 +11,7 @@ import {
   submitOrder,
   type DeliveryArea,
   deliveryCharge,
+  formatDelivery,
   type PlacedOrder,
 } from '../lib/order';
 import { bundlePrice } from '../lib/pricing';
@@ -37,6 +38,7 @@ function validate(f: Fields, area: DeliveryArea | null): Errors {
 }
 
 export function OrderSection() {
+  const freeDelivery = Object.values(site.delivery).every((d) => d === 0);
   const uid = useId();
   const bundleId = useStore((s) => s.selectedBundle);
   const shot = useStore((s) => s.finalShot);
@@ -298,6 +300,11 @@ export function OrderSection() {
 
             <fieldset className="mt-5">
               <legend className="field-label">ডেলিভারি এলাকা *</legend>
+              {freeDelivery && (
+                <p className="mb-2.5 flex items-center gap-2 rounded-xl bg-leaf/15 px-3.5 py-2.5 text-[0.95rem] font-semibold text-forest ring-1 ring-leaf/40">
+                  <Truck size={18} aria-hidden /> সারা দেশে ডেলিভারি চার্জ সম্পূর্ণ ফ্রি!
+                </p>
+              )}
               <div className="grid grid-cols-2 gap-2.5" {...(errors.area ? { 'aria-describedby': `${uid}-area-err` } : {})}>
                 {(Object.keys(AREA_LABEL) as DeliveryArea[]).map((a, i) => (
                   <label
@@ -324,7 +331,7 @@ export function OrderSection() {
                     <span className="flex flex-col items-center leading-tight">
                       {AREA_LABEL[a]}
                       <span className={`text-xs font-medium ${area === a ? 'text-cream/80' : 'text-ink-soft'}`}>
-                        ডেলিভারি {formatBdt(deliveryCharge(a))}
+                        ডেলিভারি {formatDelivery(deliveryCharge(a))}
                       </span>
                     </span>
                   </label>
@@ -386,7 +393,7 @@ export function OrderSection() {
                 </div>
                 <div className="flex justify-between gap-4">
                   <dt className="text-ink-soft">ডেলিভারি চার্জ{area ? ` (${AREA_LABEL[area]})` : ''}</dt>
-                  <dd className="font-semibold text-forest">{delivery !== null ? formatBdt(delivery) : 'এলাকা বেছে নিন'}</dd>
+                  <dd className="font-semibold text-forest">{delivery !== null ? formatDelivery(delivery) : 'এলাকা বেছে নিন'}</dd>
                 </div>
                 <div className="flex items-baseline justify-between gap-4 border-t border-amber/30 pt-2">
                   <dt className="font-semibold text-forest">সর্বমোট</dt>
@@ -460,7 +467,7 @@ function ThankYou({ order, onClose }: { order: PlacedOrder; onClose: () => void 
     ['এলাকা', AREA_LABEL[order.area]],
   ];
   if (order.subtotal !== null) rows.push(['পণ্যের মূল্য', formatBdt(order.subtotal)]);
-  rows.push(['ডেলিভারি চার্জ', formatBdt(order.delivery)]);
+  rows.push(['ডেলিভারি চার্জ', formatDelivery(order.delivery)]);
   if (order.total !== null) rows.push(['সর্বমোট', formatBdt(order.total)]);
 
   return (
